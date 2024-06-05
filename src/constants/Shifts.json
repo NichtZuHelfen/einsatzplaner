@@ -1,0 +1,63 @@
+{
+    "FELDBAU": {
+        "id": "fb",
+        "name": "Feldbau",
+        "bg": "sienna",
+        "textColor": "white"
+    },
+    "MKS": {
+        "id": "mks",
+        "name": "MKS",
+        "bg": "yellowgreen",
+        "textColor": "black"
+    },
+    "MVAFME": {
+        "id": "mvafme",
+        "name": "MVA Früh Melker",
+        "bg": "gold",
+        "textColor": "black"
+    },
+    "MVAFMI": {
+        "id": "mvafmi",
+        "name": "MVA Früh Mister",
+        "bg": "gold",
+        "textColor": "black"
+    },
+    "MVASME": {
+        "id": "mvasme",
+        "name": "MVA Spät Melker",
+        "bg": "peachpuff",
+        "textColor": "black"
+    },
+    "MVASMI": {
+        "id": "mvasmi",
+        "name": "MVA Spät Mister",
+        "bg": "peachpuff",
+        "textColor": "black"
+    },
+    "MVAR": {
+        "id": "mvar",
+        "name": "MVA Repro",
+        "bg": "peachpuff",
+        "textColor": "black"
+    },
+    "lu": {
+        "id": "lu",
+        "name": "Lehrunterweisung",
+        "bg": "lightskyblue",
+        "textColor": "black"
+    },
+    "vac": {
+        "id": "vac",
+        "name": "Urlaub",
+        "bg": "yellow",
+        "textColor": "black"
+    },
+    "ill": {
+        "id": "ill",
+        "name": "Krank",
+        "bg": "orangered",
+        "textColor": "white"
+    }
+    
+}
