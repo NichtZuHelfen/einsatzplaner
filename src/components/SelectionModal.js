@@ -7,7 +7,6 @@ export default function SelectionModal({ onChooseSelection, onCancel }) {
 
 
     const listItems = Object.keys(SHIFTS).map((key) => {
-
         const style = {
             backgroundColor: SHIFTS[key].bg,
             color: SHIFTS[key].textColor

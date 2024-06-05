@@ -5,6 +5,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import CustomEvent from "./CustomEvent";
 import ReactModal from 'react-modal';
 import SelectionModal from './SelectionModal';
+import { addEvent, getEvents } from "../database/DatabaseConnection.js";
 
 
 export default class SelectableCalendar extends Component {
@@ -12,12 +13,22 @@ export default class SelectableCalendar extends Component {
   constructor() {
     super();
     this.state = {
-      isSelectionModalVisible: false,
-      chosenEvent: undefined
-    };
-    
+      events: [{id: "fb", end: {seconds: 1717711200, nanoseconds: 0}, start: {seconds: 1717711200, nanoseconds: 0}}],
+        isSelectionModalVisible: false,
+        chosenEvent: undefined
+  };
     this.setShowSelectionModal.bind(this);
     //ReactModal.setAppElement("#calendar");
+  }
+
+  async componentDidMount() {
+    console.log("CDM");
+    const events = await getEvents();
+    console.log("loaded:");
+    console.log(events);
+      this.setState({
+        events: this.state.events.concat(...events),
+      });
   }
 
   setShowSelectionModal = (visible) => {
@@ -27,13 +38,21 @@ export default class SelectableCalendar extends Component {
   }
   
   handleSelection(selection) { 
-    console.log("selection:" + selection);
-    this.props.onSelectEvent(this.state.event.start, this.state.event.end, selection);
+  
+    const start = this.state.event.start;
+    const end = this.state.event.end;
+    const id = selection.id;
+    
+    console.log("addEvent: ");
+    console.log({ start, end, id });
+      addEvent({ start, end, id });
+      this.setState({
+        events: [...this.state.events, { start, end, id }]
+      });
     this.setShowSelectionModal(false);
   } 
 
   handleSelectTimeSlot(event) { 
-    console.log(event);
     this.setState({
       isSelectionModalVisible: true,
       event: event
@@ -41,15 +60,17 @@ export default class SelectableCalendar extends Component {
   }
 
   render() {
+    console.log(this.state.events);
+
     return (
       <>
         <Calendar
           id="calendar"
           defaultDate={Date.now()}
           defaultView={Views.MONTH}
-          events={this.props.events}
+          events={this.state.events}
           localizer={this.props.localizer}
-          onSelectEvent={this.props.onSelectEvent}
+          onSelectEvent={this.handleSelection}
           onSelectSlot={this.handleSelectTimeSlot.bind(this)}
           selectable
           scrollToTime={new Date(1970, 1, 1, 6)}
@@ -62,7 +83,7 @@ export default class SelectableCalendar extends Component {
                   day: "Tag"
           }}
           components={{
-           month: { event: CustomEvent},
+           month: { event: CustomEvent },
           }}
       />
         <ReactModal 
@@ -82,7 +103,5 @@ export default class SelectableCalendar extends Component {
 }
 
 SelectableCalendar.propTypes = {
-    localizer: PropTypes.instanceOf(DateLocalizer),
-  events: PropTypes.instanceOf(Array),
-  selectionModalVisible: PropTypes.instanceOf(Boolean)
+    localizer: PropTypes.instanceOf(DateLocalizer)
 }

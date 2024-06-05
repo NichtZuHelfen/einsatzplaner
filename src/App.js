@@ -6,25 +6,11 @@ import {isMobile} from 'react-device-detect';
 
 import "./App.css";
 import SelectableCalendar from './components/SelectableCalendar.js';
+
+
 const localizer = momentLocalizer(moment);
 
 class App extends Component {
-
-  state = {
-    events: []
-  };
-
-
-  onSelectEvent(start, end, event) {
-    console.log(start);
-    console.log(end);
-    console.log("event: " + event);
-
-    this.setState({
-      events: [...this.state.events, { start, end, ...event }]
-    });
-  }
-
 
   render() {
     return (
@@ -39,8 +25,6 @@ class App extends Component {
           <p>Einsatzplaner Julia</p>
           <SelectableCalendar
               localizer={localizer}
-              events={this.state.events}
-              onSelectEvent={this.onSelectEvent.bind(this)}
           />
       </div>
         </div>

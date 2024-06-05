@@ -14,46 +14,46 @@
     "MVAFME": {
         "id": "mvafme",
         "name": "MVA Früh Melker",
-        "bg": "gold",
+        "bg": "#FFF700",
         "textColor": "black"
     },
     "MVAFMI": {
         "id": "mvafmi",
         "name": "MVA Früh Mister",
-        "bg": "gold",
+        "bg": "#FFF700",
         "textColor": "black"
     },
     "MVASME": {
         "id": "mvasme",
         "name": "MVA Spät Melker",
-        "bg": "peachpuff",
+        "bg": "#FFD500",
         "textColor": "black"
     },
     "MVASMI": {
         "id": "mvasmi",
         "name": "MVA Spät Mister",
-        "bg": "peachpuff",
+        "bg": "#FFD500",
         "textColor": "black"
     },
     "MVAR": {
         "id": "mvar",
         "name": "MVA Repro",
-        "bg": "peachpuff",
+        "bg": "#E4FF00",
         "textColor": "black"
     },
-    "lu": {
+    "LU": {
         "id": "lu",
         "name": "Lehrunterweisung",
         "bg": "lightskyblue",
         "textColor": "black"
     },
-    "vac": {
+    "VAC": {
         "id": "vac",
         "name": "Urlaub",
-        "bg": "yellow",
-        "textColor": "black"
+        "bg": "#F38400",
+        "textColor": "white"
     },
-    "ill": {
+    "ILL": {
         "id": "ill",
         "name": "Krank",
         "bg": "orangered",
