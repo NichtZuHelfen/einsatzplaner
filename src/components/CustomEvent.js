@@ -1,7 +1,7 @@
 import { getShiftData } from "../logic/Utils";
 
 export default function CustomEvent({ event }) {
-    event = {...event, ...getShiftData(event.id)}
+    event = {...event, ...getShiftData(event.shiftID)}
 
     const componentStyle = {
         backgroundColor: event.bg,

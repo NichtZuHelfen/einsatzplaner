@@ -18,13 +18,13 @@ export default function SelectionModal({ onChooseSelection, onCancel }) {
         >{SHIFTS[key].name}</button>
 
         return {
-            id: SHIFTS[key].id, content: button,
+            id: SHIFTS[key].shiftID, content: button,
         }
     });
 
     return (
         <>
-            <div className='SelectionContainer'>
+            <div className='ModalContainer'>
                 <ReactScrollableList
                     className='ScrollList'
                     listItems = {listItems}

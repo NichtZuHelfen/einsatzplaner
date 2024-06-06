@@ -22,7 +22,7 @@ class App extends Component {
         } }>
           
         <div id="main" className="Body">
-          <p>Einsatzplaner Julia Neu</p>
+          <p>Einsatzplaner Julia</p>
           <SelectableCalendar
               localizer={localizer}
           />

@@ -1,11 +1,12 @@
-import React, { Fragment, useState, useCallback, useMemo, Component } from 'react'
+import React, {  Component } from 'react'
 import PropTypes from 'prop-types'
 import { Calendar, Views, DateLocalizer } from 'react-big-calendar'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import CustomEvent from "./CustomEvent";
 import ReactModal from 'react-modal';
 import SelectionModal from './SelectionModal';
-import { addEvent, getEvents } from "../database/DatabaseConnection.js";
+import { addEvent, deleteEvent, getEvents } from "../database/DatabaseConnection.js";
+import EventDetailModal from './EventDetailModal.js';
 
 
 export default class SelectableCalendar extends Component {
@@ -13,11 +14,11 @@ export default class SelectableCalendar extends Component {
   constructor() {
     super();
     this.state = {
-      events: [{id: "fb", end: {seconds: 1717711200, nanoseconds: 0}, start: {seconds: 1717711200, nanoseconds: 0}}],
-        isSelectionModalVisible: false,
+      events: [],
+      isSelectionModalVisible: false,
+        isEventDetailModalVisible: false,
         chosenEvent: undefined
   };
-    this.setShowSelectionModal.bind(this);
     //ReactModal.setAppElement("#calendar");
   }
 
@@ -36,21 +37,13 @@ export default class SelectableCalendar extends Component {
       isSelectionModalVisible: visible
     })
   }
-  
-  handleSelection(selection) { 
-  
-    const start = this.state.event.start;
-    const end = this.state.event.end;
-    const id = selection.id;
-    
-    console.log("addEvent: ");
-    console.log({ start, end, id });
-      addEvent({ start, end, id });
-      this.setState({
-        events: [...this.state.events, { start, end, id }]
-      });
-    this.setShowSelectionModal(false);
-  } 
+
+  setShowEventDetailModal = (visible) => {
+    this.setState({
+      isEventDetailModalVisible: visible
+    })
+  }
+
 
   handleSelectTimeSlot(event) { 
     this.setState({
@@ -58,10 +51,46 @@ export default class SelectableCalendar extends Component {
       event: event
     })
   }
+  
+  async handleSelection(selection) { 
+  
+    const start = this.state.event.start;
+    const end = this.state.event.end;
+    const shiftID = selection.shiftID;
+    
+    console.log("addEvent: ");
+    console.log({ start, end, shiftID });
+    const addedEvent = await addEvent({ start, end, shiftID });
+    console.log("added:");
+    console.log(addedEvent);
+      this.setState({
+        events: [...this.state.events, addedEvent],
+        isSelectionModalVisible: false
+      });
+  } 
+
+
+  handleSelectEvent(event) {
+    console.log(event);
+    this.setState({
+      event: event,
+      isEventDetailModalVisible: true
+    })
+  }
+
+  async handleDeleteEvent() {
+    console.log("handle");
+    await deleteEvent(this.state.event);
+    
+    this.setState({
+      events: this.state.events.filter((event) => event.docID !== this.state.event.docID),
+      event: undefined,
+      isEventDetailModalVisible: false
+    })
+  }
+
 
   render() {
-    console.log(this.state.events);
-
     return (
       <>
         <Calendar
@@ -70,7 +99,7 @@ export default class SelectableCalendar extends Component {
           defaultView={Views.MONTH}
           events={this.state.events}
           localizer={this.props.localizer}
-          onSelectEvent={this.handleSelection}
+          onSelectEvent={this.handleSelectEvent.bind(this)}
           onSelectSlot={this.handleSelectTimeSlot.bind(this)}
           selectable
           scrollToTime={new Date(1970, 1, 1, 6)}
@@ -87,7 +116,7 @@ export default class SelectableCalendar extends Component {
           }}
       />
         <ReactModal 
-          className={"SelectionModal"}
+          className={"Modal"}
           overlayClassName={"SelectionModalOverlay"}
            isOpen={this.state.isSelectionModalVisible}
         >
@@ -95,6 +124,17 @@ export default class SelectableCalendar extends Component {
             onCancel={() => this.setShowSelectionModal(false)}
             onChooseSelection={this.handleSelection.bind(this)}
           ></SelectionModal>
+        </ReactModal>
+        <ReactModal 
+          className={"Modal"}
+          overlayClassName={"SelectionModalOverlay"}
+           isOpen={this.state.isEventDetailModalVisible}
+        >
+          <EventDetailModal
+            event={this.state.event}
+            onDeleteEvent={this.handleDeleteEvent.bind(this)}
+            onCancel={() => this.setShowEventDetailModal(false)}
+          ></EventDetailModal>
         </ReactModal>
     </>
     )

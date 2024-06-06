@@ -1,60 +1,60 @@
 {
     "FELDBAU": {
-        "id": "fb",
+        "shiftID": "fb",
         "name": "Feldbau",
         "bg": "sienna",
         "textColor": "white"
     },
     "MKS": {
-        "id": "mks",
+        "shiftID": "mks",
         "name": "MKS",
         "bg": "yellowgreen",
         "textColor": "black"
     },
     "MVAFME": {
-        "id": "mvafme",
+        "shiftID": "mvafme",
         "name": "MVA Früh Melker",
         "bg": "#FFF700",
         "textColor": "black"
     },
     "MVAFMI": {
-        "id": "mvafmi",
+        "shiftID": "mvafmi",
         "name": "MVA Früh Mister",
         "bg": "#FFF700",
         "textColor": "black"
     },
     "MVASME": {
-        "id": "mvasme",
+        "shiftID": "mvasme",
         "name": "MVA Spät Melker",
         "bg": "#FFD500",
         "textColor": "black"
     },
     "MVASMI": {
-        "id": "mvasmi",
+        "shiftID": "mvasmi",
         "name": "MVA Spät Mister",
         "bg": "#FFD500",
         "textColor": "black"
     },
     "MVAR": {
-        "id": "mvar",
+        "shiftID": "mvar",
         "name": "MVA Repro",
         "bg": "#E4FF00",
         "textColor": "black"
     },
     "LU": {
-        "id": "lu",
-        "name": "Lehrunterweisung",
+        "shiftID": "lu",
+        "name": "Lehrgang",
         "bg": "lightskyblue",
         "textColor": "black"
     },
     "VAC": {
-        "id": "vac",
+        "shiftID": "vac",
         "name": "Urlaub",
         "bg": "#F38400",
         "textColor": "white"
     },
     "ILL": {
-        "id": "ill",
+        "shiftID": "ill",
         "name": "Krank",
         "bg": "orangered",
         "textColor": "white"
