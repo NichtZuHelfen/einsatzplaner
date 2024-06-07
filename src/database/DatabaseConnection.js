@@ -19,11 +19,8 @@ export async function getEvents() {
     var data = doc.data();
     data.docID = doc.id;
 
-    console.log(data);
     return data;
   });
-  console.log("getEvents:");
-  console.log(events);
     return events.map((event) => { return {...event, start: event.start.toDate(), end: event.end.toDate()} });
 }
 
@@ -34,11 +31,8 @@ export async function getEvent(docID) {
     var data = doc.data();
     data.docID = doc.id;
 
-    console.log(data);
     return data;
   });
-  console.log("getEvents:");
-  console.log(events);
     return events.map((event) => { return {...event, start: event.start.toDate(), end: event.end.toDate()} });
 }
 
@@ -53,12 +47,8 @@ export async function deleteEvent(event) {
 
   const data = await getDocs(eventsCollection);
   const toDelete = data.docs.find((doc) => {
-    console.log("doc.id: " + doc.id + " == event.docID: " + event.docID);
     return doc.id === event.docID
   }).ref;
-
-  console.log("delete");
-  console.log(toDelete);
 
    await deleteDoc(toDelete);
 }

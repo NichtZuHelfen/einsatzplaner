@@ -6,7 +6,10 @@ import {isMobile} from 'react-device-detect';
 
 import "./App.css";
 import SelectableCalendar from './components/SelectableCalendar.js';
+import initReactFastclick from 'react-fastclick';
 
+
+initReactFastclick();
 
 const localizer = momentLocalizer(moment);
 

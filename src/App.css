@@ -2,7 +2,7 @@
 
 .App {
   text-align: center;
-  height: 100vh;
+  height: 100svh;
   width: 100vw;
 }
 
@@ -21,6 +21,9 @@ p {
   width: 100%;
 }
 
+.rbc-toolbar {
+  gap: 15px;
+}
 
 .rbc-calendar {
   flex: 1;
@@ -35,7 +38,7 @@ p {
   background-color: #fff;
   border-width: 1px;
   height: calc(80vh - 20px);
-  margin: 10vh 10vw;
+  margin: 10svh 10vw;
   border-radius: 15px;
   display: flex;
   flex-direction: column;

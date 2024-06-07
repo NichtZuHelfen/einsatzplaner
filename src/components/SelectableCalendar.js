@@ -23,10 +23,7 @@ export default class SelectableCalendar extends Component {
   }
 
   async componentDidMount() {
-    console.log("CDM");
     const events = await getEvents();
-    console.log("loaded:");
-    console.log(events);
       this.setState({
         events: this.state.events.concat(...events),
       });
@@ -58,11 +55,7 @@ export default class SelectableCalendar extends Component {
     const end = this.state.event.end;
     const shiftID = selection.shiftID;
     
-    console.log("addEvent: ");
-    console.log({ start, end, shiftID });
     const addedEvent = await addEvent({ start, end, shiftID });
-    console.log("added:");
-    console.log(addedEvent);
       this.setState({
         events: [...this.state.events, addedEvent],
         isSelectionModalVisible: false
@@ -71,7 +64,6 @@ export default class SelectableCalendar extends Component {
 
 
   handleSelectEvent(event) {
-    console.log(event);
     this.setState({
       event: event,
       isEventDetailModalVisible: true
@@ -79,7 +71,6 @@ export default class SelectableCalendar extends Component {
   }
 
   async handleDeleteEvent() {
-    console.log("handle");
     await deleteEvent(this.state.event);
     
     this.setState({
@@ -114,6 +105,9 @@ export default class SelectableCalendar extends Component {
           components={{
            month: { event: CustomEvent },
           }}
+          views={{
+        month: true,
+      }}
       />
         <ReactModal 
           className={"Modal"}
