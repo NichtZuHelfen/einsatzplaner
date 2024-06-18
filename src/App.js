@@ -19,9 +19,9 @@ class App extends Component {
     return (
       <div className="App">
         <div style={{
-          padding: isMobile ? "0 5px 5px" : "0 50px 50px",
+          padding: isMobile ? "0 5px" : "0 50px",
           display: "flex",
-          height: isMobile ? "calc(100% - 5px)": "calc(100% - 50px)",
+          height: isMobile ? "calc(100% - 15px)": "calc(100% - 50px)",
         } }>
           
         <div id="main" className="Body">

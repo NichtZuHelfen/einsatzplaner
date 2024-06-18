@@ -89,6 +89,7 @@ z-index: 1000;
             padding: 2px 5px;
             text-align: center;
             word-break: break-word;
+            font-size:2vh;
 }
 
 .rbc-event-content {

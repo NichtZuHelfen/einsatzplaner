@@ -7,44 +7,44 @@
     },
     "MKS": {
         "shiftID": "mks",
-        "name": "MKS",
+        "name": "MK & BS",
         "bg": "yellowgreen",
         "textColor": "black"
     },
     "MVAFME": {
         "shiftID": "mvafme",
         "name": "MVA Früh Melker",
-        "bg": "#FFF700",
+        "bg": "lightskyblue",
         "textColor": "black"
     },
     "MVAFMI": {
         "shiftID": "mvafmi",
         "name": "MVA Früh Mister",
-        "bg": "#FFF700",
+        "bg": "lightskyblue",
         "textColor": "black"
     },
     "MVASME": {
         "shiftID": "mvasme",
         "name": "MVA Spät Melker",
-        "bg": "#FFD500",
-        "textColor": "black"
+        "bg": "#0045E2",
+        "textColor": "white"
     },
     "MVASMI": {
         "shiftID": "mvasmi",
         "name": "MVA Spät Mister",
-        "bg": "#FFD500",
-        "textColor": "black"
+        "bg": "#0045E2",
+        "textColor": "white"
     },
     "MVAR": {
         "shiftID": "mvar",
         "name": "MVA Repro",
-        "bg": "#E4FF00",
-        "textColor": "black"
+        "bg": "#FF009B",
+        "textColor": "white"
     },
     "LU": {
         "shiftID": "lu",
         "name": "Lehrgang",
-        "bg": "lightskyblue",
+        "bg": "gold",
         "textColor": "black"
     },
     "VAC": {
@@ -56,8 +56,14 @@
     "ILL": {
         "shiftID": "ill",
         "name": "Krank",
-        "bg": "orangered",
+        "bg": "red",
         "textColor": "white"
+    },
+    "HOME": {
+        "shiftID": "home",
+        "name": "Frei",
+        "bg": "#B9",
+        "textColor": "black"
     }
     
 }
