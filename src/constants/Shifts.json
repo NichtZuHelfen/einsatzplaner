@@ -5,8 +5,8 @@
         "bg": "sienna",
         "textColor": "white"
     },
-    "MKS": {
-        "shiftID": "mks",
+    "MKBS": {
+        "shiftID": "mkbs",
         "name": "MK & BS",
         "bg": "yellowgreen",
         "textColor": "black"

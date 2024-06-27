@@ -1,36 +1,40 @@
 import React, { Component } from "react";
-import { momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import 'moment/locale/de';
 import {isMobile} from 'react-device-detect';
 
 import "./App.css";
-import SelectableCalendar from './components/SelectableCalendar.js';
 import initReactFastclick from 'react-fastclick';
+
+
+import { Routes, Route } from 'react-router-dom';
+import Home from "./pages";
+import Shifts from "./pages/shifts.js";
+import TimeSheet from "./pages/timeSheet.js";
+import NavigationBar from "./components/NavigationBar.js";
 
 
 initReactFastclick();
 
-const localizer = momentLocalizer(moment);
-
 class App extends Component {
 
+
   render() {
+    console.log("Version 1.2.1");
+
     return (
+      
       <div className="App">
-        <div style={{
-          padding: isMobile ? "0 5px" : "0 50px",
-          display: "flex",
-          height: isMobile ? "calc(100% - 15px)": "calc(100% - 50px)",
-        } }>
-          
-        <div id="main" className="Body">
-          <p>Einsatzplaner Julia</p>
-          <SelectableCalendar
-              localizer={localizer}
-          />
-      </div>
+        
+        <NavigationBar />
+        <div className="Body">
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="einsatzplaner" element={<Shifts />} />
+            <Route path="stundenzettel" element={<TimeSheet />} />
+          </Routes>
+
         </div>
+      
+          
         </div>
         
     );
