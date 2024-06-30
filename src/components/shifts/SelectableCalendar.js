@@ -1,13 +1,14 @@
 import React, {  Component } from 'react'
-import PropTypes from 'prop-types'
-import { Calendar, Views, DateLocalizer } from 'react-big-calendar'
+import { Calendar, Views } from 'react-big-calendar'
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import CustomEvent from "./CustomEvent";
+import CustomShiftEvent from "./CustomShiftEvent.js";
 import ReactModal from 'react-modal';
-import SelectionModal from './SelectionModal';
-import { addEvent, deleteEvent, getEvents } from "../database/DatabaseConnection.js";
+import ShiftSelectionModal from './ShiftSelectionModal.js';
+import { addEvent, deleteEvent, getEvents } from "../../database/DatabaseConnection.js";
 import EventDetailModal from './EventDetailModal.js';
 
+import { momentLocalizer } from "react-big-calendar";
+import moment from "moment";
 
 export default class SelectableCalendar extends Component {
 
@@ -15,11 +16,14 @@ export default class SelectableCalendar extends Component {
     super();
     this.state = {
       events: [],
-      isSelectionModalVisible: false,
+      isShiftSelectionModalVisible: false,
         isEventDetailModalVisible: false,
         chosenEvent: undefined
   };
     //ReactModal.setAppElement("#calendar");
+
+
+	  this.localizer = momentLocalizer(moment);
   }
 
   async componentDidMount() {
@@ -29,9 +33,9 @@ export default class SelectableCalendar extends Component {
       });
   }
 
-  setShowSelectionModal = (visible) => {
+  setShowShiftSelectionModal = (visible) => {
     this.setState({
-      isSelectionModalVisible: visible
+      isShiftSelectionModalVisible: visible
     })
   }
 
@@ -44,7 +48,7 @@ export default class SelectableCalendar extends Component {
 
   handleSelectTimeSlot(event) { 
     this.setState({
-      isSelectionModalVisible: true,
+      isShiftSelectionModalVisible: true,
       event: event
     })
   }
@@ -58,7 +62,7 @@ export default class SelectableCalendar extends Component {
     const addedEvent = await addEvent({ start, end, shiftID });
       this.setState({
         events: [...this.state.events, addedEvent],
-        isSelectionModalVisible: false
+        isShiftSelectionModalVisible: false
       });
   } 
 
@@ -89,7 +93,7 @@ export default class SelectableCalendar extends Component {
           defaultDate={Date.now()}
           defaultView={Views.MONTH}
           events={this.state.events}
-          localizer={this.props.localizer}
+          localizer={this.localizer}
           onSelectEvent={this.handleSelectEvent.bind(this)}
           onSelectSlot={this.handleSelectTimeSlot.bind(this)}
           selectable
@@ -103,7 +107,7 @@ export default class SelectableCalendar extends Component {
                   day: "Tag"
           }}
           components={{
-           month: { event: CustomEvent },
+           month: { event: CustomShiftEvent },
           }}
           views={{
         month: true,
@@ -111,17 +115,17 @@ export default class SelectableCalendar extends Component {
       />
         <ReactModal 
           className={"Modal"}
-          overlayClassName={"SelectionModalOverlay"}
-           isOpen={this.state.isSelectionModalVisible}
+          overlayClassName={"ShiftSelectionModalOverlay"}
+           isOpen={this.state.isShiftSelectionModalVisible}
         >
-          <SelectionModal
-            onCancel={() => this.setShowSelectionModal(false)}
+          <ShiftSelectionModal
+            onCancel={() => this.setShowShiftSelectionModal(false)}
             onChooseSelection={this.handleSelection.bind(this)}
-          ></SelectionModal>
+          ></ShiftSelectionModal>
         </ReactModal>
         <ReactModal 
           className={"Modal"}
-          overlayClassName={"SelectionModalOverlay"}
+          overlayClassName={"ShiftSelectionModalOverlay"}
            isOpen={this.state.isEventDetailModalVisible}
         >
           <EventDetailModal
@@ -134,8 +138,4 @@ export default class SelectableCalendar extends Component {
     )
   }
   
-}
-
-SelectableCalendar.propTypes = {
-    localizer: PropTypes.instanceOf(DateLocalizer)
 }

@@ -1,9 +1,9 @@
 
 import ReactScrollableList from 'react-scrollable-list';
 
-export default function SelectionModal({ onChooseSelection, onCancel }) {
+export default function ShiftSelectionModal({ onChooseSelection, onCancel }) {
 
-    const SHIFTS = require('../constants/Shifts.json');
+    const SHIFTS = require('../../constants/Shifts.json');
 
 
     const listItems = Object.keys(SHIFTS).map((key) => {

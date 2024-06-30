@@ -13,7 +13,7 @@ export default function NavigationBar() {
    
     return ( 
         <ul className='NavigationBar'>
-          <li class=".active">
+          <li>
              <Link to="/" className={url === "/" ?" active" : ""}>Home</Link>
           </li>
           <li>

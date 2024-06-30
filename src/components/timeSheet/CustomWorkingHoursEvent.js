@@ -1,6 +1,6 @@
-import { getShiftData } from "../logic/Utils";
+import { getShiftData } from "../../logic/Utils";
 
-export default function CustomEvent({ event }) {
+export default function CustomWorkingHoursEvent({ event }) {
     event = {...event, ...getShiftData(event.shiftID)}
 
     const componentStyle = {
@@ -10,7 +10,7 @@ export default function CustomEvent({ event }) {
 
 
     return ( 
-        <div className="CustomEvent" style={componentStyle}>
+        <div className="CustomShiftEvent" style={componentStyle}>
             {event.name}
         </div>
     );
