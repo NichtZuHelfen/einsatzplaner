@@ -1,141 +1,97 @@
-import React, {  Component } from 'react'
-import { Calendar, Views } from 'react-big-calendar'
+import React, {  useState, useEffect } from 'react'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import CustomShiftEvent from "./CustomShiftEvent.js";
-import ReactModal from 'react-modal';
 import ShiftSelectionModal from './ShiftSelectionModal.js';
 import { addEvent, deleteEvent, getEvents } from "../../database/DatabaseConnection.js";
 import EventDetailModal from './EventDetailModal.js';
-
-import { momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-
-export default class SelectableCalendar extends Component {
-
-  constructor() {
-    super();
-    this.state = {
-      events: [],
-      isShiftSelectionModalVisible: false,
-        isEventDetailModalVisible: false,
-        chosenEvent: undefined
-  };
-    //ReactModal.setAppElement("#calendar");
+import CustomCalendar from '../CustomCalendar.js';
+import { Oval } from 'react-loader-spinner';
 
 
-	  this.localizer = momentLocalizer(moment);
-  }
+export default function SelectableCalendar() {
 
-  async componentDidMount() {
-    const events = await getEvents();
-      this.setState({
-        events: this.state.events.concat(...events),
+  const [isLoading, setIsLoading] = useState(true);
+  const [events, setEvents] = useState([]);
+  const [newEvent, setNewEvent] = useState();
+  const [isShiftSelectionModalVisible, setShiftSelectionModalVisble] = useState(false);
+  const [isEventDetailModalVisible, setEventDetailModalVisble] = useState(false);
+  
+    useEffect(() => { 
+      getEvents().then((result) => {
+        setEvents(result);
+        setIsLoading(false);
       });
-  }
-
-  setShowShiftSelectionModal = (visible) => {
-    this.setState({
-      isShiftSelectionModalVisible: visible
-    })
-  }
-
-  setShowEventDetailModal = (visible) => {
-    this.setState({
-      isEventDetailModalVisible: visible
-    })
-  }
-
-
-  handleSelectTimeSlot(event) { 
-    this.setState({
-      isShiftSelectionModalVisible: true,
-      event: event
-    })
+    }, []);
+  
+  
+  const handleSelectTimeSlot = (event) => { 
+    console.log("SELLLECT");
+    setShiftSelectionModalVisble(true);
+    setNewEvent(event);
   }
   
-  async handleSelection(selection) { 
-  
-    const start = this.state.event.start;
-    const end = this.state.event.end;
+  const handleSelection = async (selection) => { 
+    console.log("SELLECT");
+    const start = newEvent.start;
+    const end = newEvent.end;
     const shiftID = selection.shiftID;
     
     const addedEvent = await addEvent({ start, end, shiftID });
-      this.setState({
-        events: [...this.state.events, addedEvent],
-        isShiftSelectionModalVisible: false
-      });
+
+    setEvents([...events, addedEvent]);
+    setShiftSelectionModalVisble(false);
   } 
 
 
-  handleSelectEvent(event) {
-    this.setState({
-      event: event,
-      isEventDetailModalVisible: true
-    })
+  const handleSelectEvent = (event) => {
+    console.log("SELECT");
+    setNewEvent(event);
+    setEventDetailModalVisble(true);
   }
 
-  async handleDeleteEvent() {
-    await deleteEvent(this.state.event);
+  const handleDeleteEvent = async () => {
+    await deleteEvent(newEvent);
+
+    setEvents(events.filter((event) => event.docID !== newEvent.docID));
+    setNewEvent(undefined);
+    setEventDetailModalVisble(false);
+  }
     
-    this.setState({
-      events: this.state.events.filter((event) => event.docID !== this.state.event.docID),
-      event: undefined,
-      isEventDetailModalVisible: false
-    })
-  }
-
-
-  render() {
-    return (
-      <>
-        <Calendar
-          id="calendar"
-          defaultDate={Date.now()}
-          defaultView={Views.MONTH}
-          events={this.state.events}
-          localizer={this.localizer}
-          onSelectEvent={this.handleSelectEvent.bind(this)}
-          onSelectSlot={this.handleSelectTimeSlot.bind(this)}
-          selectable
-          scrollToTime={new Date(1970, 1, 1, 6)}
-          messages={{
-                  next: ">",
-                  previous: "<",
-                  today: "Heute",
-                  month: "Monat",
-                  week: "Woche",
-                  day: "Tag"
-          }}
-          components={{
-           month: { event: CustomShiftEvent },
-          }}
-          views={{
-        month: true,
-      }}
-      />
-        <ReactModal 
-          className={"Modal"}
-          overlayClassName={"ShiftSelectionModalOverlay"}
-           isOpen={this.state.isShiftSelectionModalVisible}
-        >
-          <ShiftSelectionModal
-            onCancel={() => this.setShowShiftSelectionModal(false)}
-            onChooseSelection={this.handleSelection.bind(this)}
-          ></ShiftSelectionModal>
-        </ReactModal>
-        <ReactModal 
-          className={"Modal"}
-          overlayClassName={"ShiftSelectionModalOverlay"}
-           isOpen={this.state.isEventDetailModalVisible}
-        >
-          <EventDetailModal
-            event={this.state.event}
-            onDeleteEvent={this.handleDeleteEvent.bind(this)}
-            onCancel={() => this.setShowEventDetailModal(false)}
-          ></EventDetailModal>
-        </ReactModal>
-    </>
-    )
-  }
   
+  return <>
+      <Oval
+        visible={isLoading}
+        height="80"
+        width="80"
+        color="#4fa94d"
+        ariaLabel="oval-loading"
+        wrapperStyle={{}}
+        wrapperClass="LoadingIndicator"
+      />
+      <CustomCalendar
+        key={events.length}
+        events={events}
+        handleSelectEvent={handleSelectEvent}
+        handleSelectTimeSlot={handleSelectTimeSlot}
+        customEvent={CustomShiftEvent}
+        views={{
+          month: true,
+        }}
+      />
+      <ShiftSelectionModal
+      overlayClassName={"ShiftSelectionModalOverlay"}
+      isOpen={isShiftSelectionModalVisible}
+      onCancel={() => setShiftSelectionModalVisble(false)}
+      onChooseSelection={handleSelection}
+      ></ShiftSelectionModal>
+      <EventDetailModal
+      overlayClassName={"ShiftSelectionModalOverlay"}
+      isOpen={isEventDetailModalVisible}
+      event={newEvent}
+      onDeleteEvent={handleDeleteEvent}
+      onCancel={() => setEventDetailModalVisble(false)}
+      ></EventDetailModal>
+      
+    </>;
+
 }

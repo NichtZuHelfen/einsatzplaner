@@ -125,7 +125,7 @@ li a:hover {
   flex-direction: column;
 } 
 
-.ShiftSelectionModalOverlay {
+.ModalOverlay {
 background-color: #82828299;
 position: fixed;
 top:0;
@@ -162,4 +162,9 @@ z-index: 1000;
   background-color: rgb(88, 82, 82);
   color: white;
   cursor: pointer;
+}
+
+.LoadingIndicator {
+  position: absolute;
+  top: 50%;
 }

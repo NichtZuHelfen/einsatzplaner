@@ -7,6 +7,7 @@ import { getEvents } from '../database/DatabaseConnection';
 import { useState, useEffect } from 'react';
 import CustomAgendaView from '../components/timeSheet/CustomAgendaView';
 import CustomWorkingHoursEvent from '../components/timeSheet/CustomWorkingHoursEvent';
+import { Views } from 'react-big-calendar';
 
 const TimeSheet =  () => {
 
@@ -18,11 +19,13 @@ const TimeSheet =  () => {
 
     return <div>
         <h1>Stundenzettel</h1>
+        <button>Stunden eintragen</button>
         <CustomCalendar
             key={events.length}
             events={events}
             customEvent={CustomWorkingHoursEvent}
-            views={{month: true, agenda: CustomAgendaView}}
+            views={{ month: true, agenda: CustomAgendaView }}
+            defaultView={Views.AGENDA}
         />
     </div>; 
 

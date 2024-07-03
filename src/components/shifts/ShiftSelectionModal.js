@@ -1,7 +1,8 @@
 
+import ReactModal from 'react-modal';
 import ReactScrollableList from 'react-scrollable-list';
 
-export default function ShiftSelectionModal({ onChooseSelection, onCancel }) {
+export default function ShiftSelectionModal({ isOpen, onChooseSelection, onCancel }) {
 
     const SHIFTS = require('../../constants/Shifts.json');
 
@@ -23,7 +24,11 @@ export default function ShiftSelectionModal({ onChooseSelection, onCancel }) {
     });
 
     return (
-        <>
+            <ReactModal 
+          className={"Modal"}
+          overlayClassName={"ModalOverlay"}
+           isOpen={isOpen}
+        >
             <div className='ModalContainer'>
                 <ReactScrollableList
                     className='ScrollList'
@@ -34,8 +39,7 @@ export default function ShiftSelectionModal({ onChooseSelection, onCancel }) {
             </div>
         
         <button className="CancelButton" onClick={onCancel}>Abbrechen</button>
-        
-        </>
+        </ReactModal>
         
     )
 }
