@@ -1,7 +1,7 @@
 
 import ReactModal from 'react-modal';
 
-export default function EventDetailModal({ isOpen, onDeleteEvent, onCancel }) {
+export default function WorkingHoursModal({ isOpen, onDeleteEvent, onCancel }) {
     return (
         <ReactModal 
         className={"Modal"}
@@ -9,7 +9,12 @@ export default function EventDetailModal({ isOpen, onDeleteEvent, onCancel }) {
         isOpen={isOpen}
       >
             <div className='ModalContainer'>
-                <div><button onClick={onDeleteEvent}>Löschen</button></div>
+                <p>Datum</p>
+                <p>Bereich</p>
+                <input/>
+                <p>Ende</p>
+                <p>Pause</p>
+                <input placeholder='Aufgabe'/>
             </div>
         
         <button className="CancelButton" onClick={onCancel}>Abbrechen</button>

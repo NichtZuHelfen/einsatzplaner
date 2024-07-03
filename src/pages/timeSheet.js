@@ -8,27 +8,40 @@ import { useState, useEffect } from 'react';
 import CustomAgendaView from '../components/timeSheet/CustomAgendaView';
 import CustomWorkingHoursEvent from '../components/timeSheet/CustomWorkingHoursEvent';
 import { Views } from 'react-big-calendar';
+import WorkingHoursModal from '../components/timeSheet/WorkingHoursModal.js';
 
-const TimeSheet =  () => {
+
+export default function TimeSheet() {
 
     const [events, setEvents] = useState([]);
+    const [isWorkingHoursModalOpen, setWorkingHoursModalOpen] = useState(false);
 
-    useEffect(() => { 
+    useEffect(() => {
         getEvents().then((result) => setEvents(result));
     }, []);
 
-    return <div>
-        <h1>Stundenzettel</h1>
-        <button>Stunden eintragen</button>
-        <CustomCalendar
-            key={events.length}
-            events={events}
-            customEvent={CustomWorkingHoursEvent}
-            views={{ month: true, agenda: CustomAgendaView }}
-            defaultView={Views.AGENDA}
-        />
-    </div>; 
+    const openWorkingHoursModal = () => {
+        setWorkingHoursModalOpen(true);
+    }
 
-};
- 
-export default TimeSheet;
+    return (
+        <>
+            <div>
+                <h1>Stundenzettel</h1>
+                <button onClick={ openWorkingHoursModal}>Stunden eintragen</button>
+                <CustomCalendar
+                    key={events.length}
+                    events={events}
+                    customEvent={CustomWorkingHoursEvent}
+                    views={{ month: true, agenda: CustomAgendaView }}
+                    defaultView={Views.AGENDA}
+                />
+            </div>
+            <WorkingHoursModal
+                isOpen={isWorkingHoursModalOpen}
+                onCancel={ () => setWorkingHoursModalOpen(false)}
+            />
+        </>
+    );
+}
+    

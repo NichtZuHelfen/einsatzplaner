@@ -79,19 +79,15 @@ export default function SelectableCalendar() {
         }}
       />
       <ShiftSelectionModal
-      overlayClassName={"ShiftSelectionModalOverlay"}
       isOpen={isShiftSelectionModalVisible}
       onCancel={() => setShiftSelectionModalVisble(false)}
       onChooseSelection={handleSelection}
       ></ShiftSelectionModal>
       <EventDetailModal
-      overlayClassName={"ShiftSelectionModalOverlay"}
       isOpen={isEventDetailModalVisible}
-      event={newEvent}
       onDeleteEvent={handleDeleteEvent}
       onCancel={() => setEventDetailModalVisble(false)}
       ></EventDetailModal>
-      
     </>;
 
 }
