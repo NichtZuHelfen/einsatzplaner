@@ -6,7 +6,8 @@ export default function WorkingHoursModal({ isOpen, onDeleteEvent, onCancel }) {
         <ReactModal 
         className={"Modal"}
         overlayClassName={"ModalOverlay"}
-        isOpen={isOpen}
+            isOpen={isOpen}
+            ariaHideApp={false}
       >
             <div className='ModalContainer'>
                 <p>Datum</p>
@@ -14,7 +15,6 @@ export default function WorkingHoursModal({ isOpen, onDeleteEvent, onCancel }) {
                 <input/>
                 <p>Ende</p>
                 <p>Pause</p>
-                <input placeholder='Aufgabe'/>
             </div>
         
         <button className="CancelButton" onClick={onCancel}>Abbrechen</button>

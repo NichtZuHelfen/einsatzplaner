@@ -56,13 +56,6 @@ li a:hover {
   background-color: var(--accentColor);
 }
 
-.Content {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items:start;
-}
-
 .Body {
   display: flex;
   height: 100%;
@@ -71,7 +64,8 @@ li a:hover {
   margin-bottom: 5px;
 }
 
-/* SelectableCalendar */
+
+/* ShiftCalendar */
 
 .rbc-calendar {
   max-width: 800px;
@@ -93,6 +87,7 @@ li a:hover {
 
 .rbc-calendar {
   flex: 1;
+  width: 100%;
 }
 
 .rbc-event {
@@ -104,6 +99,13 @@ li a:hover {
   white-space: normal !important;
 }
 
+
+/* Shifts */ 
+.ShiftContent {
+  display: flex;
+  flex: 1;
+}
+
 .CustomShiftEvent {
 
   border-radius: 5px;
@@ -112,7 +114,6 @@ li a:hover {
   word-break: break-word;
   font-size: 2vh;
 }
-
 
 /* Modal view */
 .Modal {
@@ -167,4 +168,29 @@ z-index: 1000;
 .LoadingIndicator {
   position: absolute;
   top: 50%;
+}
+
+
+/* Shifts */
+.ShiftContent {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.CustomShiftEvent {
+  border-radius: 5px;
+  padding: 2px 5px;
+  text-align: center;
+  word-break: break-word;
+  font-size: 2vh;
+}
+
+
+/* TimeSheet */
+.TimeSheetContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
 }

@@ -17,15 +17,14 @@ export default function CustomCalendar({ events, handleSelectEvent, handleSelect
           onSelectEvent={handleSelectEvent}
           onSelectSlot={handleSelectTimeSlot}
           selectable
-          scrollToTime={new Date(1970, 1, 1, 6)}
           messages={{
-                  next: ">",
-                  previous: "<",
-                  today: "Heute",
-                  month: "Monat",
-                  week: "Woche",
-              day: "Tag",
-                  agenda:  "Liste"
+            next: ">",
+            previous: "<",
+            today: "Heute",
+            month: "Monat",
+            week: "Woche",
+            day: "Tag",
+            agenda:  "Liste"
           }}
           components={{
            month: { event: customEvent },

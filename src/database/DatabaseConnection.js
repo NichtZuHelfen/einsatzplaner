@@ -11,21 +11,10 @@ import {
 } from "firebase/firestore";
 
 
+// Shifts
 const eventsCollection = collection(db, "events");
 
 export async function getEvents() {
-  const data = await getDocs(eventsCollection);
-  const events = data.docs.map((doc) => {
-    var data = doc.data();
-    data.docID = doc.id;
-
-    return data;
-  });
-    return events.map((event) => { return {...event, start: event.start.toDate(), end: event.end.toDate()} });
-}
-
-
-export async function getEvent(docID) {
   const data = await getDocs(eventsCollection);
   const events = data.docs.map((doc) => {
     var data = doc.data();
@@ -51,4 +40,21 @@ export async function deleteEvent(event) {
   }).ref;
 
    await deleteDoc(toDelete);
+}
+
+
+// TimeSheet
+
+const workingHoursCollection = collection(db, "workingHours");
+
+export async function getWorkingHours() {
+  const data = await getDocs(workingHoursCollection);
+  const workingHours = data.docs.map((doc) => {
+    var data = doc.data();
+    data.docID = doc.id;
+
+    return data;
+  });
+  return workingHours;
+  return workingHours.map((hours) => { return {...hours, start: hours.start.toDate(), end: hours.end.toDate()} });
 }

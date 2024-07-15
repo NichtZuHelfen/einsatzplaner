@@ -8,7 +8,7 @@ import CustomCalendar from '../CustomCalendar.js';
 import { Oval } from 'react-loader-spinner';
 
 
-export default function SelectableCalendar() {
+export default function ShiftCalendar() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
@@ -25,13 +25,11 @@ export default function SelectableCalendar() {
   
   
   const handleSelectTimeSlot = (event) => { 
-    console.log("SELLLECT");
     setShiftSelectionModalVisble(true);
     setNewEvent(event);
   }
   
   const handleSelection = async (selection) => { 
-    console.log("SELLECT");
     const start = newEvent.start;
     const end = newEvent.end;
     const shiftID = selection.shiftID;
@@ -44,7 +42,6 @@ export default function SelectableCalendar() {
 
 
   const handleSelectEvent = (event) => {
-    console.log("SELECT");
     setNewEvent(event);
     setEventDetailModalVisble(true);
   }
