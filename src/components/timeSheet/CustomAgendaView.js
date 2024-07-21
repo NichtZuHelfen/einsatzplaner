@@ -35,7 +35,6 @@ export default function CustomAgendaView({
                       
                       const workingTime = (event.end.seconds - event.start.seconds - event.break * 60 ) / 60 / 60;
 
-                      console.log(new Date(event.start.toDate()))
                       return (<tr>
                         <td>{event.date.toDate().toLocaleDateString()}</td>
                         <td>{event.name}</td>

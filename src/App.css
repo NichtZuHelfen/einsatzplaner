@@ -16,9 +16,15 @@
   flex-direction: column;
 }
 
-p {
-  font-size: calc(10px + 2vmin);
+p, input, select, button {
+
+  font-size: 2vmin;
 }
+
+p {
+  display: inline;
+}
+
 
 .NavigationBar {
   background-color: var(--primaryColor);
@@ -51,6 +57,17 @@ li a:hover {
   background-color: var(--accentColor);
 }
 
+button[type="submit"] {
+    width: 100%;
+    height: 150px;
+    border-radius: 5px;
+    border: 0;
+    box-shadow: 0px -3px 3px 0px rgba(0, 0, 0, 0.2);
+    background-color: rgb(30, 208, 75);
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
 
 .active {
   background-color: var(--accentColor);
@@ -107,12 +124,11 @@ li a:hover {
 }
 
 .CustomShiftEvent {
-
   border-radius: 5px;
   padding: 2px 5px;
   text-align: center;
   word-break: break-word;
-  font-size: 2vh;
+  font-size: 2vmin;
 }
 
 /* Modal view */
@@ -149,7 +165,8 @@ z-index: 1000;
   margin: 4px 0px;
   border-radius: 5px;
     box-shadow: 2px 3px 3px 0px rgba(0, 0, 0, 0.2);
-    border: 0;cursor: pointer;
+    border: 0;
+    cursor: pointer;
 }
 
 .CancelButton {
@@ -194,3 +211,54 @@ z-index: 1000;
   flex-direction: column;
   align-items: center;
 }
+
+.WorkingHoursModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.WorkingHoursModal>form> div {
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.HourInput::after {
+  content: "Uhr";
+  margin-left: 10px;
+}
+
+.MinutesInput::after {
+  content: "h";
+  margin-left: 10px;
+}
+
+.TimeSheetContent > .rbc-calendar> table {
+  margin-top: 20px;
+}
+
+.TimeSheetContent>button {
+  height: 50px;
+  width: 150px;
+  border-radius: 5px;
+  box-shadow: 2px 3px 3px 0px rgba(0, 0, 0, 0.2);
+  border: 0;
+  cursor: pointer;
+}
+
+.TimeSheetContent>.rbc-calendar{
+  margin-top: 20px;
+}
+
+.WorkingHoursModal>form>div:last-of-type {
+  flex-direction: column;
+  align-items: start;
+}
+
+.TaskInput {
+  width: 100%;
+  height: 150%;
+}
+
+

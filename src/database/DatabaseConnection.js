@@ -56,5 +56,10 @@ export async function getWorkingHours() {
     return data;
   });
   return workingHours;
-  return workingHours.map((hours) => { return {...hours, start: hours.start.toDate(), end: hours.end.toDate()} });
+}
+
+export async function addWorkingHours(dataObject) {
+  const addedEventDocRef = await addDoc(workingHoursCollection, dataObject);
+  const addedEvent = (await getDoc(addedEventDocRef)).data();
+    return {...addedEvent, "docID": addedEventDocRef.id};
 }
