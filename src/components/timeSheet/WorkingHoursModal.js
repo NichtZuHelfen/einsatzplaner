@@ -2,10 +2,15 @@
 import { useMemo, useState } from 'react';
 import ReactModal from 'react-modal';
 import { addWorkingHours } from '../../database/DatabaseConnection';
+import { breakDurationStringToMinutes, getShiftData } from '../../logic/Utils';
 
-export default function WorkingHoursModal({ isOpen, onDeleteEvent, onCancel }) {
+export default function WorkingHoursModal({ isOpen, onSubmitWorkingHours, onDeleteEvent, onCancel }) {
 
     const SHIFTS = require('../../constants/Shifts.json');
+
+    const [defaultStart, setDefaultStart] = useState(Object.values(SHIFTS)[0].start);
+    const [defaultEnd, setDefaultEnd] = useState(Object.values(SHIFTS)[0].end);
+    const [defaultBreak, setDefaultBreak] = useState(Object.values(SHIFTS)[0].breakDuration);
 
     const options = useMemo(() => Object.values(SHIFTS).map(value => 
         <option value={ value.shiftID}>{value.name}</option>
@@ -17,12 +22,23 @@ export default function WorkingHoursModal({ isOpen, onDeleteEvent, onCancel }) {
         const form = e.target;
         const formData = new FormData(form);
 
-        //fetch('/some-api', { method: form.method, body: formData });
         const formJson = Object.fromEntries(formData.entries());
+        formJson.start = new Date(formJson.date + "T" + formJson.start);
+        formJson.end = new Date(formJson.date + "T" + formJson.end);
+        formJson.date = new Date(formJson.date);
+        formJson.breakDuration = breakDurationStringToMinutes(formJson.breakDuration);
+
         console.log(formJson);
 
-        addWorkingHours(formJson);
-     } 
+        onSubmitWorkingHours(formJson);
+    } 
+    
+    const handleWorkspaceChange = (e) => {
+        const shift = getShiftData(e.target.value);
+        setDefaultStart(shift.start);
+        setDefaultEnd(shift.end);
+        setDefaultBreak(shift.breakDuration);
+    }
 
     return (
         <ReactModal 
@@ -40,19 +56,19 @@ export default function WorkingHoursModal({ isOpen, onDeleteEvent, onCancel }) {
                     </div>
                     <div>
                         <p>Bereich</p>
-                        <select name="workspace">
+                        <select name="workspace" onChange={handleWorkspaceChange}>
                             { options }
                         </select>
                     </div>
                     <div>
                         <p>Start</p>
-                        <input className='HourInput' type="time" name="start" />
+                        <input className='HourInput' type="time" name="start" value={ defaultStart} />
                         <p>Ende</p>
-                        <input className='HourInput' type="time" name="end" />
+                        <input className='HourInput' type="time" name="end" value={ defaultEnd}/>
                     </div>
                     <div>
                         <p>Pause</p>
-                        <input className="MinutesInput" type="time" name="breakDuration" />
+                        <input className="MinutesInput" type="time" name="breakDuration" value={ defaultBreak} />
                     </div>
                     <div>
                         <p>Aufgabe</p>

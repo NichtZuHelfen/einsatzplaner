@@ -3,61 +3,88 @@
         "shiftID": "fb",
         "name": "Feldbau",
         "bg": "sienna",
-        "textColor": "white"
+        "textColor": "white",
+        "start": "07:00",
+        "end": "16:00",
+        "breakDuration": "01:00"
     },
     "MKBS": {
         "shiftID": "mkbs",
         "name": "MK & BS",
         "bg": "yellowgreen",
-        "textColor": "black"
+        "textColor": "black",
+        "start": "05:30",
+        "end": "14:00",
+        "breakDuration": "00:30"
     },
     "MVAFME": {
         "shiftID": "mvafme",
         "name": "MVA Früh Melker",
         "bg": "lightskyblue",
-        "textColor": "black"
+        "textColor": "black",
+        "start": "04:00",
+        "end": "12:30",
+        "breakDuration": "00:30"
     },
     "MVAFMI": {
         "shiftID": "mvafmi",
         "name": "MVA Früh Mister",
         "bg": "lightskyblue",
-        "textColor": "black"
+        "textColor": "black",
+        "start": "04:00",
+        "end": "12:30",
+        "breakDuration": "00:30"
     },
     "MVASME": {
         "shiftID": "mvasme",
         "name": "MVA Spät Melker",
         "bg": "#0045E2",
-        "textColor": "white"
+        "textColor": "white",
+        "start": "15:00",
+        "end": "23:30",
+        "breakDuration": "00:30"
     },
     "MVASMI": {
         "shiftID": "mvasmi",
         "name": "MVA Spät Mister",
         "bg": "#0045E2",
-        "textColor": "white"
+        "textColor": "white",
+        "start": "15:00",
+        "end": "23:30",
+        "breakDuration": "00:30"
     },
     "MVAR": {
         "shiftID": "mvar",
         "name": "MVA Repro",
         "bg": "#FF009B",
-        "textColor": "white"
+        "textColor": "white",
+        "start": "07:00",
+        "end": "15:00"
     },
     "LU": {
         "shiftID": "lu",
         "name": "Lehrgang",
         "bg": "gold",
-        "textColor": "black"
+        "textColor": "black",
+        "start": "07:00",
+        "end": "16:00",
+        "breakDuration": "01:00"
     },
     "VAC": {
         "shiftID": "vac",
         "name": "Urlaub",
         "bg": "#F38400",
-        "textColor": "white"
+        "textColor": "white",
+        "start": "08:00",
+        "end": "16:00"
     },
     "ILL": {
         "shiftID": "ill",
         "name": "Krank",
         "bg": "red",
-        "textColor": "white"
+        "textColor": "white",
+        "start": "08:00",
+        "end": "16:00"
     },
     "HOME": {
         "shiftID": "home",

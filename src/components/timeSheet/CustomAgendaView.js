@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react'
 import PropTypes from 'prop-types'
 import { Navigate } from 'react-big-calendar'
-import { getShiftData } from '../../logic/Utils';
+import { breakDurationStringToMinutes, calculateWorkingDuration, getShiftData } from '../../logic/Utils';
 
 export default function CustomAgendaView({
     events,
@@ -12,12 +12,14 @@ export default function CustomAgendaView({
     () => CustomAgendaView.range(date, { localizer }),
     [date, localizer]
   )
-    
+
+  events = events.filter((event) => event.date >= currRange[0] && event.date <= currRange[6]).sort((a, b) => a.date - b.date);
+  
 
   return (
 
       <>
-        <table>
+        <table id="timeSheetTable">
         <thead>
             <tr>
                 <th>Datum</th>
@@ -30,18 +32,23 @@ export default function CustomAgendaView({
         </thead>
               <tbody>
                   {events.map((event) => {
+                    event = {
+                      ...event, ...getShiftData(event.shiftID),
+                      workspace: getShiftData(event.workspace).name,
+                      date: event.date.toLocaleDateString(),
+                      start: event.start? event.start.toLocaleTimeString().slice(0,5) : "-",
+                      end: event.end? event.end.toLocaleTimeString().slice(0,5) : "-",
+                      breakDuration: event.breakDuration? event.breakDuration + " min" : "-",
+                      workingTime: calculateWorkingDuration(event.end, event.start, event.breakDuration) + " h"
+                    }
                       
-                      event = { ...event, ...getShiftData(event.shiftID) }
-                      
-                      const workingTime = (event.end.seconds - event.start.seconds - event.break * 60 ) / 60 / 60;
-
                       return (<tr>
-                        <td>{event.date.toDate().toLocaleDateString()}</td>
-                        <td>{event.name}</td>
-                        <td>{event.start.toDate().toLocaleTimeString()}</td>
-                        <td>{event.end.toDate().toLocaleTimeString()}</td>
-                        <td>{event.break} min </td> 
-                        <td>{workingTime} h</td>
+                        <td>{event.date}</td>
+                        <td>{event.workspace}</td>
+                        <td>{event.start}</td>
+                        <td>{event.end}</td>
+                        <td>{event.breakDuration}</td> 
+                        <td>{event.workingTime}</td>
                   </tr>)})}
         </tbody>
         </table>
@@ -58,11 +65,12 @@ CustomAgendaView.propTypes = {
 }
 
 CustomAgendaView.range = (date, { localizer }) => {
-  const start = localizer.add(date, - new Date(date).getDay(), 'day')
+  const start = localizer.add(date, - new Date(date).getDay() + 1, 'day')
     const end = localizer.add(start, 6, 'day')
     
+  console.log(new Date(start.setHours(0,0,0)))
 
-  let current = start
+  let current = new Date(start.setHours(0,0,0))
   const range = []
 
   while (localizer.lte(current, end, 'day')) {
@@ -92,5 +100,5 @@ CustomAgendaView.title = (date, { localizer }) => {
 
     const startDate = new Date(start);
     const endDate = new Date(rest.pop());
-  return `${startDate.getDate()}.${startDate.getMonth()}.  - ${endDate.getDate()}.${endDate.getMonth()}.`
+  return `${startDate.getDate()}.${startDate.getMonth() + 1}.  - ${endDate.getDate()}.${endDate.getMonth() + 1}.`
 }

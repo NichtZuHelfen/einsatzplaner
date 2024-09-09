@@ -261,4 +261,7 @@ z-index: 1000;
   height: 150%;
 }
 
-
+#timeSheetTable>tbody tr:hover {
+  background-color: #00615D;
+  cursor: pointer;
+}

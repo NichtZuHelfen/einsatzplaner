@@ -1,9 +1,9 @@
 
-import React, {  Component } from 'react'
+import React, {  Component, useMemo } from 'react'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import CustomCalendar from '../components/CustomCalendar';
-import {getWorkingHours } from '../database/DatabaseConnection';
+import {addWorkingHours, getWorkingHours } from '../database/DatabaseConnection';
 import { useState, useEffect } from 'react';
 import CustomAgendaView from '../components/timeSheet/CustomAgendaView';
 import CustomWorkingHoursEvent from '../components/timeSheet/CustomWorkingHoursEvent';
@@ -16,14 +16,21 @@ export default function TimeSheet() {
     const [workingHours, setWorkingHours] = useState([]);
     const [isWorkingHoursModalOpen, setWorkingHoursModalOpen] = useState(false);
 
+    var workingHoursID = undefined;
+
     useEffect(() => {
-        getWorkingHours().then((result) => {setWorkingHours(result)});
+        getWorkingHours().then((result) => setWorkingHours(result));
     }, []);
 
     const openWorkingHoursModal = () => {
         setWorkingHoursModalOpen(true);
-        console.log(workingHours);
     }
+
+    const onSubmitWorkingHours = (dataObject) => { 
+        addWorkingHours(dataObject);
+        setWorkingHoursModalOpen(false);
+    }
+
 
     return (
         <div className='TimeSheetContent'>
@@ -34,13 +41,18 @@ export default function TimeSheet() {
                     key={workingHours.length}
                     events={workingHours}
                     customEvent={CustomWorkingHoursEvent}
-                    views={{ month: true, agenda: CustomAgendaView }}
+                    views={{
+                        agenda: CustomAgendaView
+                        
+                    }}
                     defaultView={Views.AGENDA}
                 />
             </>
             <WorkingHoursModal
                 isOpen={isWorkingHoursModalOpen}
-                onCancel={ () => setWorkingHoursModalOpen(false)}
+                id={workingHoursID}
+                onSubmitWorkingHours={onSubmitWorkingHours}
+                onCancel={() => setWorkingHoursModalOpen(false)}
             />
         </div>
     );

@@ -1,4 +1,5 @@
 
+import { breakDurationStringToMinutes, convertTimestampObjectToDate, convertTimestampObjectToTime } from "../logic/Utils.js";
 import { db } from "./FirebaseConfig.js";
 import {
   collection,
@@ -52,6 +53,11 @@ export async function getWorkingHours() {
   const workingHours = data.docs.map((doc) => {
     var data = doc.data();
     data.docID = doc.id;
+
+    data.date = convertTimestampObjectToDate(data.date);
+    data.start = data.start? convertTimestampObjectToDate(data.start) : null;
+    data.end = data.end? convertTimestampObjectToDate(data.end) : null;
+    console.log(data);
 
     return data;
   });
