@@ -5,8 +5,9 @@ import { breakDurationStringToMinutes, calculateWorkingDuration, getShiftData } 
 
 export default function CustomAgendaView({
     events,
-  date,
-  localizer
+    date,
+    localizer,
+    onSelectEntry
 }) {
   const currRange = useMemo(
     () => CustomAgendaView.range(date, { localizer }),
@@ -32,7 +33,7 @@ export default function CustomAgendaView({
         </thead>
               <tbody>
                   {events.map((event) => {
-                    event = {
+                    event = { 
                       ...event, ...getShiftData(event.shiftID),
                       workspace: getShiftData(event.workspace).name,
                       date: event.date.toLocaleDateString(),
@@ -42,7 +43,7 @@ export default function CustomAgendaView({
                       workingTime: calculateWorkingDuration(event.end, event.start, event.breakDuration) + " h"
                     }
                       
-                      return (<tr>
+                      return (<tr onClick={() => onSelectEntry(event.docID)}>
                         <td>{event.date}</td>
                         <td>{event.workspace}</td>
                         <td>{event.start}</td>
@@ -68,8 +69,6 @@ CustomAgendaView.range = (date, { localizer }) => {
   const start = localizer.add(date, - new Date(date).getDay() + 1, 'day')
     const end = localizer.add(start, 6, 'day')
     
-  console.log(new Date(start.setHours(0,0,0)))
-
   let current = new Date(start.setHours(0,0,0))
   const range = []
 

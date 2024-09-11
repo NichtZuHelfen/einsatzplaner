@@ -1,17 +1,22 @@
 
 import { useMemo, useState } from 'react';
 import ReactModal from 'react-modal';
-import { addWorkingHours } from '../../database/DatabaseConnection';
-import { breakDurationStringToMinutes, getShiftData } from '../../logic/Utils';
+import { breakDurationStringToMinutes, formatDate, formatTime, getShiftData, minutesToDurationString } from '../../logic/Utils';
 
-export default function WorkingHoursModal({ isOpen, onSubmitWorkingHours, onDeleteEvent, onCancel }) {
+export default function WorkingHoursModal({ isOpen, event, onSubmitWorkingHours, onDeleteEvent, onCancel }) {
 
     const SHIFTS = require('../../constants/Shifts.json');
 
-    const [defaultStart, setDefaultStart] = useState(Object.values(SHIFTS)[0].start);
-    const [defaultEnd, setDefaultEnd] = useState(Object.values(SHIFTS)[0].end);
-    const [defaultBreak, setDefaultBreak] = useState(Object.values(SHIFTS)[0].breakDuration);
+    const [workspaceChoice, setWorkspaceChoice] = useState(Object.values(SHIFTS)[0].shiftID);
 
+    console.log(workspaceChoice)
+    const date = event ? formatDate(event.date): undefined;
+    const workspace = event ? event.workspace : undefined;
+    const start = event ? formatTime(event.start) : Object.values(SHIFTS)[0].start;
+    const end = event ? formatTime(event.end) : Object.values(SHIFTS)[0].end;
+    const breakDuration = event ? minutesToDurationString(event.breakDuration) : Object.values(SHIFTS)[0].breakDuration;
+
+    console.log(start, end, breakDuration)
     const options = useMemo(() => Object.values(SHIFTS).map(value => 
         <option value={ value.shiftID}>{value.name}</option>
     ));
@@ -34,10 +39,8 @@ export default function WorkingHoursModal({ isOpen, onSubmitWorkingHours, onDele
     } 
     
     const handleWorkspaceChange = (e) => {
-        const shift = getShiftData(e.target.value);
-        setDefaultStart(shift.start);
-        setDefaultEnd(shift.end);
-        setDefaultBreak(shift.breakDuration);
+        setWorkspaceChoice(getShiftData(e.target.value));
+        //TODO
     }
 
     return (
@@ -52,23 +55,23 @@ export default function WorkingHoursModal({ isOpen, onSubmitWorkingHours, onDele
                 <form id="workingHoursForm" method="post" onSubmit={handleSubmit}>
                     <div>
                         <p>Datum</p>
-                        <input input="datum" type="date" name="date" />
+                        <input input="datum" type="date" name="date" defaultValue={ date }  />
                     </div>
                     <div>
                         <p>Bereich</p>
-                        <select name="workspace" onChange={handleWorkspaceChange}>
+                        <select name="workspace" onChange={handleWorkspaceChange} defaultValue={workspace }>
                             { options }
                         </select>
                     </div>
                     <div>
                         <p>Start</p>
-                        <input className='HourInput' type="time" name="start" value={ defaultStart} />
+                        <input className='HourInput' type="time" name="start" defaultValue={ start}/>
                         <p>Ende</p>
-                        <input className='HourInput' type="time" name="end" value={ defaultEnd}/>
+                        <input className='HourInput' type="time" name="end" defaultValue={ end }/>
                     </div>
                     <div>
                         <p>Pause</p>
-                        <input className="MinutesInput" type="time" name="breakDuration" value={ defaultBreak} />
+                        <input className="MinutesInput" type="time" name="breakDuration" defaultValue={ breakDuration }/>
                     </div>
                     <div>
                         <p>Aufgabe</p>
@@ -76,7 +79,7 @@ export default function WorkingHoursModal({ isOpen, onSubmitWorkingHours, onDele
                     </div>
                 </form>
                 <div style={{ "height": "100%" }}/>
-                    <button type="submit" form="workingHoursForm">Hinzufügen</button>
+                    <button type="submit" form="workingHoursForm">{event? "Speichern" : "Hinzufügen"}</button>
             </div>
         
         <button className="CancelButton" onClick={onCancel}>Abbrechen</button>

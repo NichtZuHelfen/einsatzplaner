@@ -57,7 +57,6 @@ export async function getWorkingHours() {
     data.date = convertTimestampObjectToDate(data.date);
     data.start = data.start? convertTimestampObjectToDate(data.start) : null;
     data.end = data.end? convertTimestampObjectToDate(data.end) : null;
-    console.log(data);
 
     return data;
   });

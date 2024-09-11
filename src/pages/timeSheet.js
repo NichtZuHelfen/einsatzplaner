@@ -15,8 +15,7 @@ export default function TimeSheet() {
 
     const [workingHours, setWorkingHours] = useState([]);
     const [isWorkingHoursModalOpen, setWorkingHoursModalOpen] = useState(false);
-
-    var workingHoursID = undefined;
+    const [event, setEvent] = useState(undefined);
 
     useEffect(() => {
         getWorkingHours().then((result) => setWorkingHours(result));
@@ -28,8 +27,27 @@ export default function TimeSheet() {
 
     const onSubmitWorkingHours = (dataObject) => { 
         addWorkingHours(dataObject);
+        onCancel();
+    }
+
+    const onCancel = () => {
+        setEvent(undefined);
         setWorkingHoursModalOpen(false);
     }
+
+
+    const onSelectEntry = (entryID) => {
+        setEvent(workingHours.find((wh) => wh.docID === entryID));
+        setWorkingHoursModalOpen(true);
+    }
+
+    const ProxyAgendaView = ({ ...props}) => { 
+        return (<CustomAgendaView {...props} onSelectEntry={onSelectEntry}/>);
+    }
+
+    ProxyAgendaView.title = CustomAgendaView.title;
+    ProxyAgendaView.navigate = CustomAgendaView.navigate;
+    ProxyAgendaView.range = CustomAgendaView.range;
 
 
     return (
@@ -42,17 +60,16 @@ export default function TimeSheet() {
                     events={workingHours}
                     customEvent={CustomWorkingHoursEvent}
                     views={{
-                        agenda: CustomAgendaView
-                        
+                        agenda: ProxyAgendaView
                     }}
                     defaultView={Views.AGENDA}
                 />
             </>
             <WorkingHoursModal
                 isOpen={isWorkingHoursModalOpen}
-                id={workingHoursID}
+                event={event}
                 onSubmitWorkingHours={onSubmitWorkingHours}
-                onCancel={() => setWorkingHoursModalOpen(false)}
+                onCancel={onCancel}
             />
         </div>
     );
