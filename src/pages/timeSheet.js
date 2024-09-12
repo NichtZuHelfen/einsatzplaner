@@ -3,12 +3,13 @@ import React, {  Component, useMemo } from 'react'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import CustomCalendar from '../components/CustomCalendar';
-import {addWorkingHours, getWorkingHours } from '../database/DatabaseConnection';
+import {addWorkingHours, deleteWorkingHours, getWorkingHours, updateWorkingHours } from '../database/DatabaseConnection';
 import { useState, useEffect } from 'react';
 import CustomAgendaView from '../components/timeSheet/CustomAgendaView';
 import CustomWorkingHoursEvent from '../components/timeSheet/CustomWorkingHoursEvent';
 import { Views } from 'react-big-calendar';
 import WorkingHoursModal from '../components/timeSheet/WorkingHoursModal.js';
+import { getShiftData } from '../logic/Utils.js';
 
 
 export default function TimeSheet() {
@@ -25,8 +26,36 @@ export default function TimeSheet() {
         setWorkingHoursModalOpen(true);
     }
 
+
     const onSubmitWorkingHours = (dataObject) => { 
-        addWorkingHours(dataObject);
+        if (event) {
+            updateWorkingHours(event.docID, dataObject);
+            const i = workingHours.findIndex((e) => {
+                console.log(event.docID + " " + e.docID)
+                return event.docID === e.docID
+            });
+            console.log("found:")
+            console.log(i)
+            dataObject.docID = event.docID;
+            workingHours[i] = dataObject;
+            setWorkingHours(workingHours);
+        }
+        else {
+            addWorkingHours(dataObject);
+            workingHours.push(dataObject);
+            setWorkingHours(workingHours);
+        }
+        onCancel();
+    }
+
+    const onDeleteEvent = () => {
+        deleteWorkingHours(event.docID);
+
+        const i = workingHours.findIndex((e) => event.docID === e.docID);
+        workingHours.splice(i, 1);
+        console.log(workingHours)
+        setWorkingHours(workingHours);
+
         onCancel();
     }
 
@@ -66,9 +95,11 @@ export default function TimeSheet() {
                 />
             </>
             <WorkingHoursModal
+                key={ Date.now()}
                 isOpen={isWorkingHoursModalOpen}
                 event={event}
                 onSubmitWorkingHours={onSubmitWorkingHours}
+                onDeleteEvent={ onDeleteEvent }
                 onCancel={onCancel}
             />
         </div>

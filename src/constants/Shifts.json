@@ -15,7 +15,8 @@
         "textColor": "black",
         "start": "05:30",
         "end": "14:00",
-        "breakDuration": "00:30"
+        "breakDuration": "00:30",
+        "task": "Tägliche Pflege"
     },
     "MVAFME": {
         "shiftID": "mvafme",
@@ -24,7 +25,8 @@
         "textColor": "black",
         "start": "04:00",
         "end": "12:30",
-        "breakDuration": "00:30"
+        "breakDuration": "00:30",
+        "task": "Melken"
     },
     "MVAFMI": {
         "shiftID": "mvafmi",
@@ -33,7 +35,8 @@
         "textColor": "black",
         "start": "04:00",
         "end": "12:30",
-        "breakDuration": "00:30"
+        "breakDuration": "00:30",
+        "task": "Misten"
     },
     "MVASME": {
         "shiftID": "mvasme",
@@ -42,7 +45,8 @@
         "textColor": "white",
         "start": "15:00",
         "end": "23:30",
-        "breakDuration": "00:30"
+        "breakDuration": "00:30",
+        "task": "Melken"
     },
     "MVASMI": {
         "shiftID": "mvasmi",
@@ -51,7 +55,8 @@
         "textColor": "white",
         "start": "15:00",
         "end": "23:30",
-        "breakDuration": "00:30"
+        "breakDuration": "00:30",
+        "task": "Misten"
     },
     "MVAR": {
         "shiftID": "mvar",
@@ -59,7 +64,8 @@
         "bg": "#FF009B",
         "textColor": "white",
         "start": "07:00",
-        "end": "15:00"
+        "end": "15:00", 
+        "task": "Tägliche Versorgung Kälber"
     },
     "LU": {
         "shiftID": "lu",
@@ -76,7 +82,8 @@
         "bg": "#F38400",
         "textColor": "white",
         "start": "08:00",
-        "end": "16:00"
+        "end": "16:00",
+        "task": "-"
     },
     "ILL": {
         "shiftID": "ill",
@@ -84,13 +91,15 @@
         "bg": "red",
         "textColor": "white",
         "start": "08:00",
-        "end": "16:00"
+        "end": "16:00",
+        "task": "-"
     },
-    "HOME": {
-        "shiftID": "home",
+    "PRIVATE": {
+        "shiftID": "priv",
         "name": "Frei",
         "bg": "#B9B9B9",
-        "textColor": "black"
+        "textColor": "black",
+        "task": "-"
     }
     
 }

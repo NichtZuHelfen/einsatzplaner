@@ -1,22 +1,29 @@
 
-import { useMemo, useState } from 'react';
+import { useMemo, useReducer, useState } from 'react';
 import ReactModal from 'react-modal';
 import { breakDurationStringToMinutes, formatDate, formatTime, getShiftData, minutesToDurationString } from '../../logic/Utils';
+import IconButton from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function WorkingHoursModal({ isOpen, event, onSubmitWorkingHours, onDeleteEvent, onCancel }) {
+
+export default function WorkingHoursModal({isOpen, event, onSubmitWorkingHours, onDeleteEvent, onCancel }) {
 
     const SHIFTS = require('../../constants/Shifts.json');
 
-    const [workspaceChoice, setWorkspaceChoice] = useState(Object.values(SHIFTS)[0].shiftID);
+    const [workspace, setWorkspace] = useState(event ? event.workspace : undefined);
+    const [start, setStart] = useState(event ? formatTime(event.start) : Object.values(SHIFTS)[0].start);
+    const [end, setEnd] = useState(event ? formatTime(event.end) : Object.values(SHIFTS)[0].end);
+    const [breakDuration, setBreakDuration] = useState(event ? minutesToDurationString(event.breakDuration) : Object.values(SHIFTS)[0].breakDuration);
+    const [task, setTask] = useState(event ? event.task : Object.values(SHIFTS)[0].task);
 
-    console.log(workspaceChoice)
-    const date = event ? formatDate(event.date): undefined;
-    const workspace = event ? event.workspace : undefined;
-    const start = event ? formatTime(event.start) : Object.values(SHIFTS)[0].start;
-    const end = event ? formatTime(event.end) : Object.values(SHIFTS)[0].end;
-    const breakDuration = event ? minutesToDurationString(event.breakDuration) : Object.values(SHIFTS)[0].breakDuration;
+    var date = event ? formatDate(event.date): undefined;
+    //var workspace = event ? event.workspace : undefined;
+    //var start = event ? formatTime(event.start) : Object.values(SHIFTS)[0].start;
+    //var end = event ? formatTime(event.end) : Object.values(SHIFTS)[0].end;
+    //var breakDuration = event ? minutesToDurationString(event.breakDuration) : Object.values(SHIFTS)[0].breakDuration;
+    //var task = event ? event.task : Object.values(SHIFTS)[0].task;
 
-    console.log(start, end, breakDuration)
+
     const options = useMemo(() => Object.values(SHIFTS).map(value => 
         <option value={ value.shiftID}>{value.name}</option>
     ));
@@ -33,25 +40,36 @@ export default function WorkingHoursModal({ isOpen, event, onSubmitWorkingHours,
         formJson.date = new Date(formJson.date);
         formJson.breakDuration = breakDurationStringToMinutes(formJson.breakDuration);
 
-        console.log(formJson);
-
         onSubmitWorkingHours(formJson);
     } 
-    
-    const handleWorkspaceChange = (e) => {
-        setWorkspaceChoice(getShiftData(e.target.value));
-        //TODO
-    }
 
+    const onWorkspaceChange = (e) => {
+        const shiftData = getShiftData(e.target.value);
+        console.log(shiftData);
+
+        setWorkspace(shiftData.name);
+        setStart(shiftData.start);
+        setEnd(shiftData.end);
+        setBreakDuration(shiftData.breakDuration);
+        setTask(shiftData.task);
+    }
+    
+    console.log(workspace, start, end, breakDuration)
     return (
         <ReactModal 
-        className={"Modal"}
-        overlayClassName={"ModalOverlay"}
+            className={"Modal"}
+            overlayClassName={"ModalOverlay"}
             isOpen={isOpen}
             ariaHideApp={false}
       >
             <div className='ModalContainer WorkingHoursModal'>
-                <h1>Stunden erfassen</h1>
+                <div class="ModalTitle">
+                    <h1>Stunden erfassen</h1>
+                    { event? <IconButton title="Löschen" onClick={onDeleteEvent}>
+                        <DeleteIcon/>
+                    </IconButton> : <div/>}
+                    
+                </div>
                 <form id="workingHoursForm" method="post" onSubmit={handleSubmit}>
                     <div>
                         <p>Datum</p>
@@ -59,23 +77,23 @@ export default function WorkingHoursModal({ isOpen, event, onSubmitWorkingHours,
                     </div>
                     <div>
                         <p>Bereich</p>
-                        <select name="workspace" onChange={handleWorkspaceChange} defaultValue={workspace }>
+                        <select name="workspace" onChange={onWorkspaceChange} defaultValue={workspace }>
                             { options }
                         </select>
                     </div>
                     <div>
                         <p>Start</p>
-                        <input className='HourInput' type="time" name="start" defaultValue={ start}/>
+                        <input className='HourInput' type="time" name="start" value={ start} onChange={(e)=>setStart(e.target.value)}/>
                         <p>Ende</p>
-                        <input className='HourInput' type="time" name="end" defaultValue={ end }/>
+                        <input className='HourInput' type="time" name="end" value={ end } onChange={(e)=>setEnd(e.target.value)}/>
                     </div>
                     <div>
                         <p>Pause</p>
-                        <input className="MinutesInput" type="time" name="breakDuration" defaultValue={ breakDuration }/>
+                        <input className="MinutesInput" type="time" name="breakDuration" value={ breakDuration }  onChange={(e)=>setBreakDuration(e.target.value)}/>
                     </div>
                     <div>
                         <p>Aufgabe</p>
-                        <input className="TaskInput" type="text" name="task" />
+                        <input className="TaskInput" type="text" name="task" value={ task } onChange={(e)=>setTask(e.target.value)}/>
                     </div>
                 </form>
                 <div style={{ "height": "100%" }}/>

@@ -20,7 +20,6 @@ export function breakDurationStringToMinutes(breakDuration) {
 
 export function minutesToDurationString(mins) {
 
-    console.log(mins)
     var hours = Math.trunc(mins / 60);
     var minutes = mins - hours * 60;
 
@@ -28,9 +27,6 @@ export function minutesToDurationString(mins) {
         hours = '0' + hours;
     if (minutes < 10) 
         minutes = '0' + minutes;
-
-    console.log(hours + " " + minutes)
-
 
     return `${hours}:${minutes}`;
 }
@@ -47,7 +43,6 @@ export function calculateWorkingDuration(endDate, startDate, breakDuration) {
 }
 
 export function formatDate(date) {
-    console.log(date);
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -62,7 +57,6 @@ export function formatDate(date) {
 }
 
 export function formatTime(date) {
-    console.log(date);
     var d = new Date(date),
         hours = '' + d.getHours(),
         minutes = '' + d.getMinutes()

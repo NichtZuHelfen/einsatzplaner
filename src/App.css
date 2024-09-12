@@ -218,6 +218,17 @@ z-index: 1000;
   justify-content: space-around;
 }
 
+.ModalTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+svg[data-testid="DeleteIcon"] {
+  color: red;
+  width: 1.5em;
+  height: 1.5em;
+}
+
 .WorkingHoursModal>form> div {
   display: flex;
     justify-content: space-between;

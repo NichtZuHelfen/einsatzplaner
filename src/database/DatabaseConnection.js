@@ -68,3 +68,14 @@ export async function addWorkingHours(dataObject) {
   const addedEvent = (await getDoc(addedEventDocRef)).data();
     return {...addedEvent, "docID": addedEventDocRef.id};
 }
+
+
+export async function updateWorkingHours(docID, dataObject) {
+  const dbDoc = doc(db, "workingHours", docID);
+  updateDoc(dbDoc, dataObject);
+}
+
+export async function deleteWorkingHours(docID) {
+  const dbDoc = doc(db, "workingHours", docID);
+  deleteDoc(dbDoc);
+}

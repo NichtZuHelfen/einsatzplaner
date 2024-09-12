@@ -13,7 +13,6 @@ export default function CustomAgendaView({
     () => CustomAgendaView.range(date, { localizer }),
     [date, localizer]
   )
-
   events = events.filter((event) => event.date >= currRange[0] && event.date <= currRange[6]).sort((a, b) => a.date - b.date);
   
 
@@ -69,13 +68,14 @@ CustomAgendaView.range = (date, { localizer }) => {
   const start = localizer.add(date, - new Date(date).getDay() + 1, 'day')
     const end = localizer.add(start, 6, 'day')
     
-  let current = new Date(start.setHours(0,0,0))
+  let current = new Date(start).setHours(0,0,0)
   const range = []
 
   while (localizer.lte(current, end, 'day')) {
     range.push(current)
     current = localizer.add(current, 1, 'day')
   }
+  range[range.length - 1].setHours(23,59,59)
   return range
 }
 
