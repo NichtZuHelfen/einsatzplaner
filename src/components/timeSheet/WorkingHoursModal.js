@@ -10,42 +10,54 @@ export default function WorkingHoursModal({isOpen, event, onSubmitWorkingHours, 
 
     const SHIFTS = require('../../constants/Shifts.json');
 
+    var date = event ? formatDate(event.date) : undefined;
+    const [dateError, setDateError] = useState('');
+
     const [workspace, setWorkspace] = useState(event ? event.workspace : undefined);
     const [start, setStart] = useState(event ? formatTime(event.start) : Object.values(SHIFTS)[0].start);
     const [end, setEnd] = useState(event ? formatTime(event.end) : Object.values(SHIFTS)[0].end);
     const [breakDuration, setBreakDuration] = useState(event ? minutesToDurationString(event.breakDuration) : Object.values(SHIFTS)[0].breakDuration);
     const [task, setTask] = useState(event ? event.task : Object.values(SHIFTS)[0].task);
 
-    var date = event ? formatDate(event.date): undefined;
-    //var workspace = event ? event.workspace : undefined;
-    //var start = event ? formatTime(event.start) : Object.values(SHIFTS)[0].start;
-    //var end = event ? formatTime(event.end) : Object.values(SHIFTS)[0].end;
-    //var breakDuration = event ? minutesToDurationString(event.breakDuration) : Object.values(SHIFTS)[0].breakDuration;
-    //var task = event ? event.task : Object.values(SHIFTS)[0].task;
-
 
     const options = useMemo(() => Object.values(SHIFTS).map(value => 
         <option value={ value.shiftID}>{value.name}</option>
     ));
+
+    const validateForm = (date) => {
+        console.log(date);
+        var error = "";
+        var isValid = true;
+
+        if (date === '') {
+            error = 'Bitte ein Datum angeben!';
+            isValid = false;
+        }
+
+        setDateError(error);
+        return isValid;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const form = e.target;
         const formData = new FormData(form);
-
         const formJson = Object.fromEntries(formData.entries());
-        formJson.start = new Date(formJson.date + "T" + formJson.start);
-        formJson.end = new Date(formJson.date + "T" + formJson.end);
-        formJson.date = new Date(formJson.date);
-        formJson.breakDuration = breakDurationStringToMinutes(formJson.breakDuration);
 
-        onSubmitWorkingHours(formJson);
+        console.log(formJson);
+        if (validateForm(formJson.date)) {
+            formJson.start = new Date(formJson.date + "T" + formJson.start);
+            formJson.end = new Date(formJson.date + "T" + formJson.end);
+            formJson.date = new Date(formJson.date);
+            formJson.breakDuration = breakDurationStringToMinutes(formJson.breakDuration);
+
+            onSubmitWorkingHours(formJson);
+        }
     } 
 
     const onWorkspaceChange = (e) => {
         const shiftData = getShiftData(e.target.value);
-        console.log(shiftData);
 
         setWorkspace(shiftData.name);
         setStart(shiftData.start);
@@ -54,7 +66,6 @@ export default function WorkingHoursModal({isOpen, event, onSubmitWorkingHours, 
         setTask(shiftData.task);
     }
     
-    console.log(workspace, start, end, breakDuration)
     return (
         <ReactModal 
             className={"Modal"}
@@ -73,8 +84,9 @@ export default function WorkingHoursModal({isOpen, event, onSubmitWorkingHours, 
                 <form id="workingHoursForm" method="post" onSubmit={handleSubmit}>
                     <div>
                         <p>Datum</p>
-                        <input input="datum" type="date" name="date" defaultValue={ date }  />
+                        <input input="datum" type="date" name="date" defaultValue={date} />
                     </div>
+                    {dateError && <div class="Error">{dateError}</div>}
                     <div>
                         <p>Bereich</p>
                         <select name="workspace" onChange={onWorkspaceChange} defaultValue={workspace }>

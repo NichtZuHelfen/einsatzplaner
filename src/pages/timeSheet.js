@@ -53,7 +53,6 @@ export default function TimeSheet() {
 
         const i = workingHours.findIndex((e) => event.docID === e.docID);
         workingHours.splice(i, 1);
-        console.log(workingHours)
         setWorkingHours(workingHours);
 
         onCancel();

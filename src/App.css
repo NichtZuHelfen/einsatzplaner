@@ -276,3 +276,9 @@ svg[data-testid="DeleteIcon"] {
   background-color: #00615D;
   cursor: pointer;
 }
+
+.Error {
+  color: red;
+  justify-content: end !important;
+  margin-top: -9px;
+}
