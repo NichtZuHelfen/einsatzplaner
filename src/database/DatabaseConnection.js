@@ -48,17 +48,21 @@ export async function deleteEvent(event) {
 
 const workingHoursCollection = collection(db, "workingHours");
 
+export function convertDataFormats(dataObject) {
+    dataObject.date = convertTimestampObjectToDate(dataObject.date);
+    dataObject.start = dataObject.start? convertTimestampObjectToDate(dataObject.start) : null;
+    dataObject.end = dataObject.end? convertTimestampObjectToDate(dataObject.end) : null;
+
+  return dataObject;
+}
+
 export async function getWorkingHours() {
   const data = await getDocs(workingHoursCollection);
   const workingHours = data.docs.map((doc) => {
     var data = doc.data();
     data.docID = doc.id;
 
-    data.date = convertTimestampObjectToDate(data.date);
-    data.start = data.start? convertTimestampObjectToDate(data.start) : null;
-    data.end = data.end? convertTimestampObjectToDate(data.end) : null;
-
-    return data;
+    return convertDataFormats(data);
   });
   return workingHours;
 }
@@ -66,7 +70,7 @@ export async function getWorkingHours() {
 export async function addWorkingHours(dataObject) {
   const addedEventDocRef = await addDoc(workingHoursCollection, dataObject);
   const addedEvent = (await getDoc(addedEventDocRef)).data();
-    return {...addedEvent, "docID": addedEventDocRef.id};
+  return {...addedEvent, "docID": addedEventDocRef.id};
 }
 
 
@@ -76,6 +80,7 @@ export async function updateWorkingHours(docID, dataObject) {
 }
 
 export async function deleteWorkingHours(docID) {
+  console.log(docID);
   const dbDoc = doc(db, "workingHours", docID);
   deleteDoc(dbDoc);
 }

@@ -21,7 +21,7 @@ export default function WorkingHoursModal({isOpen, event, onSubmitWorkingHours, 
 
 
     const options = useMemo(() => Object.values(SHIFTS).map(value => 
-        <option value={ value.shiftID}>{value.name}</option>
+        <option key={ value.shiftID }  value={ value.shiftID}>{value.name}</option>
     ));
 
     const validateForm = (date) => {
@@ -45,7 +45,6 @@ export default function WorkingHoursModal({isOpen, event, onSubmitWorkingHours, 
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
 
-        console.log(formJson);
         if (validateForm(formJson.date)) {
             formJson.start = new Date(formJson.date + "T" + formJson.start);
             formJson.end = new Date(formJson.date + "T" + formJson.end);
@@ -74,7 +73,7 @@ export default function WorkingHoursModal({isOpen, event, onSubmitWorkingHours, 
             ariaHideApp={false}
       >
             <div className='ModalContainer WorkingHoursModal'>
-                <div class="ModalTitle">
+                <div className="ModalTitle">
                     <h1>Stunden erfassen</h1>
                     { event? <IconButton title="Löschen" onClick={onDeleteEvent}>
                         <DeleteIcon/>

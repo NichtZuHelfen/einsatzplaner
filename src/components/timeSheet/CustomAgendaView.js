@@ -42,7 +42,8 @@ export default function CustomAgendaView({
                       workingTime: calculateWorkingDuration(event.end, event.start, event.breakDuration) + " h"
                     }
                       
-                      return (<tr onClick={() => onSelectEntry(event.docID)}>
+                    return (
+                      <tr key={ event.docID } onClick={() => onSelectEntry(event.docID)}>
                         <td>{event.date}</td>
                         <td>{event.workspace}</td>
                         <td>{event.start}</td>
@@ -54,14 +55,6 @@ export default function CustomAgendaView({
         </table>
       </>
   )
-}
-
-CustomAgendaView.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  localizer: PropTypes.object,
-  max: PropTypes.instanceOf(Date),
-  min: PropTypes.instanceOf(Date),
-  scrollToTime: PropTypes.instanceOf(Date),
 }
 
 CustomAgendaView.range = (date, { localizer }) => {

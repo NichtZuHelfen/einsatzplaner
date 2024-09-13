@@ -3,7 +3,7 @@ import React, {  Component, useMemo } from 'react'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import CustomCalendar from '../components/CustomCalendar';
-import {addWorkingHours, deleteWorkingHours, getWorkingHours, updateWorkingHours } from '../database/DatabaseConnection';
+import {addWorkingHours, convertDataFormats, deleteWorkingHours, getWorkingHours, updateWorkingHours } from '../database/DatabaseConnection';
 import { useState, useEffect } from 'react';
 import CustomAgendaView from '../components/timeSheet/CustomAgendaView';
 import CustomWorkingHoursEvent from '../components/timeSheet/CustomWorkingHoursEvent';
@@ -22,12 +22,9 @@ export default function TimeSheet() {
         getWorkingHours().then((result) => setWorkingHours(result));
     }, []);
 
-    const openWorkingHoursModal = () => {
-        setWorkingHoursModalOpen(true);
-    }
 
 
-    const onSubmitWorkingHours = (dataObject) => { 
+    const onSubmitWorkingHours = async (dataObject) => { 
         if (event) {
             updateWorkingHours(event.docID, dataObject);
             const i = workingHours.findIndex((e) => {
@@ -41,20 +38,25 @@ export default function TimeSheet() {
             setWorkingHours(workingHours);
         }
         else {
-            addWorkingHours(dataObject);
-            workingHours.push(dataObject);
+            dataObject = await addWorkingHours(dataObject);
+            console.log(dataObject.docID);
+            workingHours.push(convertDataFormats(dataObject));
+            console.log(workingHours);
             setWorkingHours(workingHours);
         }
         onCancel();
     }
 
     const onDeleteEvent = () => {
+        console.log(workingHours.map(r => r.docID));
+        getWorkingHours().then((result) => console.log(result.map(r => r.docID)));
+        console.log(event.docID)
+
         deleteWorkingHours(event.docID);
 
         const i = workingHours.findIndex((e) => event.docID === e.docID);
         workingHours.splice(i, 1);
         setWorkingHours(workingHours);
-
         onCancel();
     }
 
@@ -82,7 +84,7 @@ export default function TimeSheet() {
         <div className='TimeSheetContent'>
             <>
                 <h1>Stundenzettel</h1>
-                <button onClick={ openWorkingHoursModal}>Stunden eintragen</button>
+                <button onClick={ () => setWorkingHoursModalOpen(true)}>Stunden eintragen</button>
                 <CustomCalendar
                     key={workingHours.length}
                     events={workingHours}
