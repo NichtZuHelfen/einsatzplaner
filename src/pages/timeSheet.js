@@ -9,20 +9,20 @@ import CustomAgendaView from '../components/timeSheet/CustomAgendaView';
 import CustomWorkingHoursEvent from '../components/timeSheet/CustomWorkingHoursEvent';
 import { Views } from 'react-big-calendar';
 import WorkingHoursModal from '../components/timeSheet/WorkingHoursModal.js';
-import { getShiftData } from '../logic/Utils.js';
-
+import { generatePDF, getShiftData } from '../logic/Utils.js';
+import PDFModal from '../components/timeSheet/PDFModal.js';
+import { Button, Fab } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
 export default function TimeSheet() {
-
     const [workingHours, setWorkingHours] = useState([]);
     const [isWorkingHoursModalOpen, setWorkingHoursModalOpen] = useState(false);
+    const [isPDFModalOpen, setPDFModalOpen] = useState(false);
     const [event, setEvent] = useState(undefined);
 
     useEffect(() => {
         getWorkingHours().then((result) => setWorkingHours(result));
     }, []);
-
-
 
     const onSubmitWorkingHours = async (dataObject) => { 
         if (event) {
@@ -44,7 +44,7 @@ export default function TimeSheet() {
             console.log(workingHours);
             setWorkingHours(workingHours);
         }
-        onCancel();
+        onCloseWHModal();
     }
 
     const onDeleteEvent = () => {
@@ -57,12 +57,16 @@ export default function TimeSheet() {
         const i = workingHours.findIndex((e) => event.docID === e.docID);
         workingHours.splice(i, 1);
         setWorkingHours(workingHours);
-        onCancel();
+        onCloseWHModal();
     }
 
-    const onCancel = () => {
+    const onCloseWHModal = () => {
         setEvent(undefined);
         setWorkingHoursModalOpen(false);
+    }
+
+    const onClosePDFModal = () => {
+        setPDFModalOpen(false);
     }
 
 
@@ -83,8 +87,10 @@ export default function TimeSheet() {
     return (
         <div className='TimeSheetContent'>
             <>
-                <h1>Stundenzettel</h1>
-                <button onClick={ () => setWorkingHoursModalOpen(true)}>Stunden eintragen</button>
+                <div id="WorkingHoursTitle">
+                    <h1>Stundenzettel</h1>
+                </div>
+                <Button onClick={ () => setWorkingHoursModalOpen(true)}>Stunden eintragen</Button>
                 <CustomCalendar
                     key={workingHours.length}
                     events={workingHours}
@@ -93,7 +99,7 @@ export default function TimeSheet() {
                         agenda: ProxyAgendaView
                     }}
                     defaultView={Views.AGENDA}
-                />
+                />               
             </>
             <WorkingHoursModal
                 key={ Date.now()}
@@ -101,8 +107,16 @@ export default function TimeSheet() {
                 event={event}
                 onSubmitWorkingHours={onSubmitWorkingHours}
                 onDeleteEvent={ onDeleteEvent }
-                onCancel={onCancel}
+                onCancel={onCloseWHModal}
             />
+            <PDFModal
+                isOpen={isPDFModalOpen}
+                data={workingHours}
+                onCancel={onClosePDFModal}
+            />
+            <Fab color="primary" aria-label="export">
+                <SendIcon onClick={ () => setPDFModalOpen(true) } />
+            </Fab>
         </div>
     );
 }

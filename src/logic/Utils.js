@@ -1,3 +1,5 @@
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const SHIFTS = require('../constants/Shifts.json');
     
@@ -67,3 +69,22 @@ export function formatTime(date) {
 
     return [hours, minutes].join(':');
 }
+
+export function generatePDF(htmlElement, pdfName) {
+    console.log(htmlElement + " " + pdfName);
+    const input = htmlElement;
+    html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 295; // A4 height in mm
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        let position = heightLeft;
+
+        pdf.save(pdfName + ".pdf");
+    })
+};

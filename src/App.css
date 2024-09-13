@@ -205,6 +205,10 @@ z-index: 1000;
 
 
 /* TimeSheet */
+#WorkingHoursTitle{
+  display: flex;
+}
+
 .TimeSheetContent {
   display: flex;
   flex: 1;
