@@ -1,5 +1,63 @@
 {
-    "FELDBAU": {
+
+    "MVAFME": {
+        "shiftID": "mvafme",
+        "name": "Früh Melker",
+        "bg": "#9ddcff",
+        "textColor": "black",
+        "start": "04:00",
+        "end": "12:30",
+        "breakDuration": "00:30",
+        "task": "Melken"
+    },
+    "MVAFMI": {
+        "shiftID": "mvafmi",
+        "name": "Früh Mister",
+        "bg": "#9ddcff",
+        "textColor": "black",
+        "start": "04:00",
+        "end": "12:30",
+        "breakDuration": "00:30",
+        "task": "Misten"
+    },
+    "MVAF": {
+        "shiftID": "mvaf",
+        "name": "Fütterer",
+        "bg": "#37e7de",
+        "textColor": "black",
+        "start": "07:00",
+        "end": "15:00", 
+        "task": "Füttern"
+    },
+    "MVAR": {
+        "shiftID": "mvar",
+        "name": "Repro",
+        "bg": "#FF009B",
+        "textColor": "white",
+        "start": "07:00",
+        "end": "15:00", 
+        "task": "Tägliche Versorgung Kälber"
+    },
+    "MVASME": {
+        "shiftID": "mvasme",
+        "name": "Spät Melker",
+        "bg": "#0045E2",
+        "textColor": "white",
+        "start": "15:00",
+        "end": "23:30",
+        "breakDuration": "00:30",
+        "task": "Melken"
+    },
+    "MVASMI": {
+        "shiftID": "mvasmi",
+        "name": "Spät Mister",
+        "bg": "#0045E2",
+        "textColor": "white",
+        "start": "15:00",
+        "end": "23:30",
+        "breakDuration": "00:30",
+        "task": "Misten"
+    },"FELDBAU": {
         "shiftID": "fb",
         "name": "Feldbau",
         "bg": "sienna",
@@ -17,55 +75,6 @@
         "end": "14:00",
         "breakDuration": "00:30",
         "task": "Tägliche Pflege"
-    },
-    "MVAFME": {
-        "shiftID": "mvafme",
-        "name": "MVA Früh Melker",
-        "bg": "lightskyblue",
-        "textColor": "black",
-        "start": "04:00",
-        "end": "12:30",
-        "breakDuration": "00:30",
-        "task": "Melken"
-    },
-    "MVAFMI": {
-        "shiftID": "mvafmi",
-        "name": "MVA Früh Mister",
-        "bg": "lightskyblue",
-        "textColor": "black",
-        "start": "04:00",
-        "end": "12:30",
-        "breakDuration": "00:30",
-        "task": "Misten"
-    },
-    "MVASME": {
-        "shiftID": "mvasme",
-        "name": "MVA Spät Melker",
-        "bg": "#0045E2",
-        "textColor": "white",
-        "start": "15:00",
-        "end": "23:30",
-        "breakDuration": "00:30",
-        "task": "Melken"
-    },
-    "MVASMI": {
-        "shiftID": "mvasmi",
-        "name": "MVA Spät Mister",
-        "bg": "#0045E2",
-        "textColor": "white",
-        "start": "15:00",
-        "end": "23:30",
-        "breakDuration": "00:30",
-        "task": "Misten"
-    },
-    "MVAR": {
-        "shiftID": "mvar",
-        "name": "MVA Repro",
-        "bg": "#FF009B",
-        "textColor": "white",
-        "start": "07:00",
-        "end": "15:00", 
-        "task": "Tägliche Versorgung Kälber"
     },
     "LU": {
         "shiftID": "lu",
@@ -99,6 +108,13 @@
         "name": "Frei",
         "bg": "#B9B9B9",
         "textColor": "black",
+        "task": "-"
+    },
+    "OTHER": {
+        "shiftID": "misc",
+        "name": "Sonstiges",
+        "bg": "#777676",
+        "textColor": "white",
         "task": "-"
     }
     
