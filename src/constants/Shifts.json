@@ -1,0 +1,121 @@
+{
+
+    "MVAFME": {
+        "shiftID": "mvafme",
+        "name": "Früh Melker",
+        "bg": "#9ddcff",
+        "textColor": "black",
+        "start": "04:00",
+        "end": "12:30",
+        "breakDuration": "00:30",
+        "task": "Melken"
+    },
+    "MVAFMI": {
+        "shiftID": "mvafmi",
+        "name": "Früh Mister",
+        "bg": "#9ddcff",
+        "textColor": "black",
+        "start": "04:00",
+        "end": "12:30",
+        "breakDuration": "00:30",
+        "task": "Misten"
+    },
+    "MVAF": {
+        "shiftID": "mvaf",
+        "name": "Fütterer",
+        "bg": "#37e7de",
+        "textColor": "black",
+        "start": "07:00",
+        "end": "15:00", 
+        "task": "Füttern"
+    },
+    "MVAR": {
+        "shiftID": "mvar",
+        "name": "Repro",
+        "bg": "#FF009B",
+        "textColor": "white",
+        "start": "07:00",
+        "end": "15:00", 
+        "task": "Tägliche Versorgung Kälber"
+    },
+    "MVASME": {
+        "shiftID": "mvasme",
+        "name": "Spät Melker",
+        "bg": "#0045E2",
+        "textColor": "white",
+        "start": "15:00",
+        "end": "23:30",
+        "breakDuration": "00:30",
+        "task": "Melken"
+    },
+    "MVASMI": {
+        "shiftID": "mvasmi",
+        "name": "Spät Mister",
+        "bg": "#0045E2",
+        "textColor": "white",
+        "start": "15:00",
+        "end": "23:30",
+        "breakDuration": "00:30",
+        "task": "Misten"
+    },"FELDBAU": {
+        "shiftID": "fb",
+        "name": "Feldbau",
+        "bg": "sienna",
+        "textColor": "white",
+        "start": "07:00",
+        "end": "16:00",
+        "breakDuration": "01:00"
+    },
+    "MKBS": {
+        "shiftID": "mkbs",
+        "name": "MK & BS",
+        "bg": "yellowgreen",
+        "textColor": "black",
+        "start": "05:30",
+        "end": "14:00",
+        "breakDuration": "00:30",
+        "task": "Tägliche Pflege"
+    },
+    "LU": {
+        "shiftID": "lu",
+        "name": "Lehrgang",
+        "bg": "gold",
+        "textColor": "black",
+        "start": "07:00",
+        "end": "16:00",
+        "breakDuration": "01:00"
+    },
+    "VAC": {
+        "shiftID": "vac",
+        "name": "Urlaub",
+        "bg": "#F38400",
+        "textColor": "white",
+        "start": "08:00",
+        "end": "16:00",
+        "task": "-"
+    },
+    "ILL": {
+        "shiftID": "ill",
+        "name": "Krank",
+        "bg": "red",
+        "textColor": "white",
+        "start": "08:00",
+        "end": "16:00",
+        "task": "-"
+    },
+    "PRIVATE": {
+        "shiftID": "priv",
+        "name": "Frei",
+        "bg": "#B9B9B9",
+        "textColor": "black",
+        "task": "-"
+    },
+    "OTHER": {
+        "shiftID": "misc",
+        "name": "Sonstiges",
+        "bg": "#777676",
+        "textColor": "white",
+        "task": "-"
+    }
+    
+}
