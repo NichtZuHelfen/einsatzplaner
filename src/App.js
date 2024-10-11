@@ -18,7 +18,7 @@ class App extends Component {
 
 
   render() {
-    console.log("Version 1.2.1");
+    console.log("Version 1.3");
 
     return (
       

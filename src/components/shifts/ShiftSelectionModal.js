@@ -22,7 +22,6 @@ export default function ShiftSelectionModal({ isOpen, onChooseSelection, onCance
             style={style}
         >{SHIFTS[key].name}</button>
 
-        console.log(key);
         return {
             id: SHIFTS[key].shiftID, content: button,
         }
